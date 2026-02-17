@@ -34,7 +34,7 @@ require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_register_tax.php';
 
 //require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_custom_fields.php';
 
-require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_custom_fields2.php';
+require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_custom_fields.php';
 
 // require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_custom_field.php';
 
