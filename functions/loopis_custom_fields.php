@@ -34,14 +34,6 @@ function loopis_enqueue_datetime_picker( $hook ) {
         '4.6.13'
     );
 
-    // Custom CSS
-    /*wp_enqueue_style(
-        'custom-css',
-         plugin_dir_url( __FILE__ ) . '../assets/css/loopis-datetime.css',       
-        [],
-        '1.0'
-    );*/
-
     // Flatpickr JS
     wp_enqueue_script(
         'flatpickr',

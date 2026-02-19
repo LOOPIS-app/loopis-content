@@ -9,8 +9,6 @@ if (!defined('ABSPATH')) {
     exit; 
 }
 
-
-
 function register_cpts() {
 
  $cpts = [
@@ -180,13 +178,5 @@ function register_cpts() {
 }
 
 add_action( 'init', 'register_cpts' );
-
-/*add_action('rest_api_init', function() {
-    $routes = rest_get_server()->get_routes();
-    echo '<pre>!!!';
-    print_r(array_keys($routes));
-    echo '</pre>';
-    exit;
-});*/
 
 ?>
