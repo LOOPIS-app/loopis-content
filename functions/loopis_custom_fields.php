@@ -61,15 +61,6 @@ function loopis_enqueue_datetime_picker( $hook ) {
         true
     );
 
-    // CSS for URL validation - not used right now
-   wp_enqueue_style(
-        'loopis-form-validate-css',
-        plugin_dir_url( __FILE__ ) . '../assets/css/loopis-form-validate.css',
-        [],
-        '1.0',
-        true,
-   );
-
 }
 
 // Field groups with custom fields
