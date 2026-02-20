@@ -102,7 +102,6 @@ function loopis_get_field_groups() {
         ],
 
         // field group: 'post_meta', custom fields: 'location', 'custom_location', etc
-        // översätt label, engelska
         // allow null, påslaget för alla fält
 
         'post_meta' => [
@@ -444,7 +443,6 @@ error_log("POST[$key] = " . print_r($_POST[$key] ?? 'NOT SET', true));
                 case 'url':
                     
                     // Backend validation
-
                     $value = trim( $value );
                     
                     // Null or nothing is OK

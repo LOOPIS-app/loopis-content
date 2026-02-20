@@ -1,11 +1,11 @@
 <?php
 /**
-* Plugin Name: LOOPIS CPT
-* Plugin URI:  https://github.com/LOOPIS-app/loopis-cpt/
+* Plugin Name: LOOPIS CONTENT
+* Plugin URI:  https://github.com/LOOPIS-app/loopis-content
 * Description: Plugin for handling custom post types & related taxonomies
 * Version: 0.1
 * Author: nissegit
-* Text Domain: loopis-cpt
+* Text Domain: loopis-content
 */
 
 // Prevent direct access
