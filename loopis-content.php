@@ -1,9 +1,9 @@
 <?php
 /**
-* Plugin Name: LOOPIS CONTENT
+* Plugin Name: LOOPIS Content
 * Plugin URI:  https://github.com/LOOPIS-app/loopis-content
 * Description: Plugin for handling custom post types & related taxonomies
-* Version: 0.1
+* Version: 0.3
 * Author: nissegit
 * Text Domain: loopis-content
 */
@@ -101,7 +101,7 @@ function loopis_user_ajax_search() {
     }
 
     wp_send_json_success($results);
-} 
+}
 
 // Save function for taxonomy field
 
@@ -112,7 +112,7 @@ function loopis_save_taxonomy_field( $post_id ) {
 
     if ( ! isset($_REQUEST['status']) ) return;
 
-    $taxonomy = 'support_categoryz';
+    $taxonomy = 'support-status';
     $term_id  = intval( $_REQUEST['status'] );
 
     if ( $term_id ) {
@@ -124,4 +124,3 @@ function loopis_save_taxonomy_field( $post_id ) {
 }
 add_action('save_post', 'loopis_save_taxonomy_field', 20);
 
-?>
