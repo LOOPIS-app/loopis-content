@@ -13,12 +13,12 @@ function register_cpts() {
 
  $cpts = [
 
-    // CTP faqz
+    // CTP faq
 
-    'faqz' => [
+    'faq' => [
         'labels' => [
-            'name'          => 'Faqz',
-            'singular_name' => 'FAQ-singular',
+            'name'          => 'FAQ-posts',
+            'singular_name' => 'FAQ-post',
 			'add_new_item'  => 'Add new FAQ',
             'search_items'  => 'Search FAQs',
         ],
@@ -33,14 +33,13 @@ function register_cpts() {
         'show_in_menu'          => true,
         'menu_icon'             => 'dashicons-sticky',
         'hierarchical'          => true,
-        'has_archive'           => 'faqzz',
-        'query_var'             => 'faqzz',
-        'rest_base'             => 'faqz', // rest_base added
+        'has_archive'           => 'faq',
+        'query_var'             => 'faq',
         'map_meta_cap'          => true,
         'menu_position'         => 13,
 
         'rewrite' => [
-            'slug'          => 'faqzz',
+            'slug'          => 'faq',
             'with_front'    => true,
             'pages'         => true,
             'feeds'         => true,
@@ -55,12 +54,12 @@ function register_cpts() {
         ],
     ],
 
-    // CPT forumz
+    // CPT forum
 
-    'forumz' => [
+    'forum' => [
         'labels' => [
-            'name'          => 'Forumz',
-            'singular_name' => 'Forum-singular',
+            'name'          => 'Forum-posts',
+            'singular_name' => 'Forum-post',
 			'add_new_item'  => 'Add new Forum post',
             'search_items'  => 'Search Forum posts',
         ],
@@ -70,19 +69,18 @@ function register_cpts() {
         'show_in_rest'          => true,
         'show_in_nav_menus'     => true,
         'show_in_admin_bar'     => true,
-        'exclude_from_search'   => false,
+        'exclude_from_search'   => true,
         'show_ui'               => true,
-        'show_in_menu'          => true,
+        'show_in_menu'          => false,
         'menu_icon'             => 'dashicons-admin-comments',
         'hierarchical'          => true,
-        'has_archive'           => 'forumzz',
-        'query_var'             => 'forumzz',
-        'rest_base'             => 'forumz', // rest_base added
+        'has_archive'           => false,
+        'query_var'             => 'forum',
         'map_meta_cap'          => true,
         'menu_position'         => 14,
 
         'rewrite' => [
-            'slug'          => 'forumzz',
+            'slug'          => 'forum',
             'with_front'    => true,
             'pages'         => true,
             'feeds'         => true,
@@ -97,14 +95,14 @@ function register_cpts() {
         ],
     ],
 
-    // CPT supportz
+    // CPT support
     
-    'supportz' => [
+    'support' => [
         'labels' => [
-            'name'          => 'Supportz',
-            'singular_name' => 'Support-singular',
-            'add_new_item'  => 'Add new supportz',
-            'search_items'  => 'Search supportzs',
+            'name'          => 'Support-posts',
+            'singular_name' => 'Support-post',
+            'add_new_item'  => 'Add new support post',
+            'search_items'  => 'Search support posts',
         ],
 
         'public'                => true,
@@ -112,19 +110,18 @@ function register_cpts() {
         'show_in_rest'          => true,
         'show_in_nav_menus'     => true,
         'show_in_admin_bar'     => true,
-        'exclude_from_search'   => false,
+        'exclude_from_search'   => true,
         'show_ui'               => true,
-        'show_in_menu'          => true,
+        'show_in_menu'          => false,
         'menu_icon'             => 'dashicons-sos',
         'hierarchical'          => true,
-        'has_archive'           => 'supportzz',
-        'query_var'             => 'supportzz',
-        'rest_base'             => 'supportz', // rest_base added
+        'has_archive'           => false,
+        'query_var'             => 'support',
         'map_meta_cap'          => true,
         'menu_position'         => 15,
 
         'rewrite' => [
-            'slug'          => 'supportzz',
+            'slug'          => 'support',
             'with_front'    => true,
             'pages'         => true,
             'feeds'         => true,
@@ -140,33 +137,6 @@ function register_cpts() {
     ],
 
     // add more CPTs here
-
-    /*
-    'supportz' => [
-        'labels' => [
-            'name' => 'Supportz',
-            'singular_name' => 'Support',
-        ],
-
-        'public' => true,
-        'show_in_rest' => true,
-        'menu_icon' => 'dashicons-sos',
-        'menu_position' => 15,
-
-        'supports' => [
-            'title',
-            'editor',
-            'excerpt',
-            'thumbnail',
-        ],
-
-        'has_archive' => true,
-
-        'rewrite' => [
-            'slug' => 'lp_support',
-            'with_front' => false,
-        ],
-    ],*/
 
     ];
 

@@ -13,12 +13,12 @@ function register_taxonomies() {
 
     $taxonomies = [
 
-        // A taxonomy for the CPT type 'faqz' with the name 'faq_categoryz' etc
+        // A taxonomy for the CPT type 'faq' with the name 'faq-categories' etc
         
-        'faq_categoryz' => [
-            'post_type' => 'faqz',
-            'slug' => 'faqz-kategori',
-            'name' => 'FAQz-kategori',
+        'faq-category' => [
+            'post_type' => 'faq',
+            'slug' => 'faq-category',
+            'name' => 'FAQ-categories',
             'hierarchical' => true,
             'show_ui'           => true,
             'show_in_nav_menus' => true,
@@ -26,19 +26,19 @@ function register_taxonomies() {
             'show_admin_column' => true,
         ],
 
-        'forum_categoryz' => [
-            'post_type' => 'forumz',
-            'slug' => 'forumz-kategori',
-            'name' => 'Forumz-kategori',
+        'forum-category' => [
+            'post_type' => 'forum',
+            'slug' => 'forum-category',
+            'name' => 'Forum-categories',
             'hierarchical' => true,
             'show_admin_column' => true,
             'show_tagcloud'     => true,
         ],
         
-        'support_categoryz' => [
-            'post_type' => 'supportz',
-            'slug' => 'supportz-kategori',
-            'name' => 'Supportz-kategori',
+        'support-status' => [
+            'post_type' => 'support',
+            'slug' => 'support-status',
+            'name' => 'Support-status',
             'hierarchical' => true,
             'show_tagcloud'     => true,
             'show_admin_column' => true,

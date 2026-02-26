@@ -20,7 +20,7 @@ function loopis_add_default_terms() {
     $defaults = [
 
         // FAQ-kategorier
-        'faq_categoryz' => [
+        'faq-category' => [
             [
                 'name' => 'Instruktioner',
                 'slug' => 'instructions',
@@ -44,7 +44,7 @@ function loopis_add_default_terms() {
         ],
 
         // Forumkategorier
-        'forum_categoryz' => [
+        'forum-category' => [
             [
                 'name' => '✨ Nyhet',
                 'slug' => 'news',
@@ -72,7 +72,7 @@ function loopis_add_default_terms() {
         ],
 
         // Supportkategorier
-        'support_categoryz' => [
+        'support-status' => [
             [
                 'name' => '⚠ Pågående',
                 'slug' => 'active',

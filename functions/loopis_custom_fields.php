@@ -73,7 +73,7 @@ function loopis_get_field_groups() {
 
         'support_meta' => [
             'title' => 'Support Fields',
-            'post_types' => ['supportz'],
+            'post_types' => ['support'],
             'fields' => [
                 'title' => [
                     'label' => 'Title',
@@ -88,7 +88,7 @@ function loopis_get_field_groups() {
                 'status' => [
                     'label' => 'Status',
                     'type'  => 'taxonomy',
-                    'taxonomy' => 'support_categoryz', // needed for the taxonomy field
+                    'taxonomy' => 'support-status', // needed for the taxonomy field
                     'nullable' => true,
                 ],
                 'invited' => [
@@ -404,8 +404,6 @@ function loopis_render_meta_box( $post, $box ) {
 add_action( 'save_post', 'loopis_save_fields' );
 
 function loopis_save_fields( $post_id ) {
-error_log('SAVE TRIGGERED FOR POST ' . $post_id);
-error_log("POST[$key] = " . print_r($_POST[$key] ?? 'NOT SET', true));
 
     if ( ! isset( $_POST['loopis_fields_nonce'] ) ) return;
 
@@ -434,7 +432,7 @@ error_log("POST[$key] = " . print_r($_POST[$key] ?? 'NOT SET', true));
             }
 
             $value = $_POST[ $key ];
-            error_log("POST[$key] = " . print_r($_POST[$key] ?? 'NOT SET2', true));
+
             switch ( $field['type'] ) {
                 case 'number':
                     $value = floatval( $value );
@@ -445,11 +443,12 @@ error_log("POST[$key] = " . print_r($_POST[$key] ?? 'NOT SET', true));
                     // Backend validation
                     $value = trim( $value );
                     
-                    // Null or nothing is OK
+                    // Null or nothing is OK (not registered in DB)
                     if ( $value === '' ) {
                         delete_post_meta( $post_id, $key, '' );
                         return;
                     }
+
                     // Only accept URL:s that starts with https://
                     if ( ! str_starts_with( $value, 'https://' ) ) {
                         delete_post_meta( $post_id, $key );
