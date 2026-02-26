@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit; 
 }
 
-// Load scripts and files for the datetime picker + validation (URL)
+// Load scripts and files for the datetime picker
 
 add_action( 'admin_enqueue_scripts', 'loopis_enqueue_datetime_picker' );
 function loopis_enqueue_datetime_picker( $hook ) {
@@ -52,15 +52,6 @@ function loopis_enqueue_datetime_picker( $hook ) {
         true
     );
 
-    // JS for URL validation
-    wp_enqueue_script(
-        'loopis-form-validate',
-        plugin_dir_url( __FILE__ ) . '../assets/js/loopis-form-validate.js',
-        [],
-        '1.0',
-        true
-    );
-
 }
 
 // Field groups with custom fields
@@ -69,7 +60,7 @@ function loopis_get_field_groups() {
 
     return [
 
-        // field group: 'support_meta', custom fields: 'title', 'link', 'status', 'invited'
+        // Field group: 'support_meta', custom fields: 'title', 'link', 'status', 'invited'
 
         'support_meta' => [
             'title' => 'Support Fields',
@@ -101,8 +92,8 @@ function loopis_get_field_groups() {
             ],
         ],
 
-        // field group: 'post_meta', custom fields: 'location', 'custom_location', etc
-        // allow null, påslaget för alla fält
+        // Field group: 'post_meta', custom fields: 'location', 'custom_location', etc
+        // Allow null, true for all fields
 
         'post_meta' => [
             'title' => 'Post Data Fields',
@@ -125,7 +116,7 @@ function loopis_get_field_groups() {
                 ],
                 'image_2' => [
                     'label' => 'Extra image?',
-                    'type'  => 'image', // kolla databas test.loopis.app, kan räcka med ID (+ ev utöka med tredje bild)
+                    'type'  => 'image',
                     'nullable' => true,
                 ],
                 'participants' => [
@@ -279,14 +270,14 @@ function loopis_render_meta_box( $post, $box ) {
 
             case 'user_ajax':
 
-                // Avgör om fältet ska vara multi eller single
+                // Decide if the field should be multi or single
                 $multiple = ! empty( $field['multiple'] );
                 $mode     = $multiple ? 'multi' : 'single';
 
-                // Hämta värdet från post_meta
+                // Get the value from post_meta
                 $value = get_post_meta( $post->ID, $key, true );
 
-                // Säkerställ att $user_ids alltid är array
+                // Make sure that $user_ids is always an array
                 if ( $multiple ) {
                     $user_ids = is_array( $value ) ? $value : [];
                 } else {
@@ -298,10 +289,10 @@ function loopis_render_meta_box( $post, $box ) {
                     }
                 }
 
-                // Öppna wrapper DIV med data-mode korrekt
+                // Open wrapper DIV with the correct data-mode
                 echo '<div class="loopis-user-ajax" data-key="' . esc_attr( $key ) . '" data-mode="' . esc_attr( $mode ) . '">';
 
-                // Container för redan valda användare
+                // Container for the already chosen users
                 echo '<div class="loopis-user-selected">';
 
                 foreach ( $user_ids as $uid ) {
@@ -311,7 +302,7 @@ function loopis_render_meta_box( $post, $box ) {
                         echo esc_html( $u->display_name );
                         echo '<button type="button">×</button>';
 
-                        // Hidden input: array för multi, single för single
+                        // Hidden input: array for multi, single value for single
                         if ( $multiple ) {
                             echo '<input type="hidden" name="' . esc_attr( $key ) . '[]" value="' . esc_attr( $uid ) . '">';
                         } else {
@@ -322,13 +313,13 @@ function loopis_render_meta_box( $post, $box ) {
                     }
                 }
 
-                echo '</div>'; // slut på .loopis-user-selected
+                echo '</div>'; // end of .loopis-user-selected
 
-                // Sökfält och resultatcontainer
+                // Search field and result container
                 echo '<input type="text" class="loopis-user-search" placeholder="Search users..." autocomplete="off">';
                 echo '<div class="loopis-user-results"></div>';
 
-                echo '</div>'; // slut på wrapper
+                echo '</div>'; // end of wrapper
                 break;
 
             case 'url':

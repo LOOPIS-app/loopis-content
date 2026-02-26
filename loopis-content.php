@@ -29,13 +29,7 @@ require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_default_terms.php'
 
 require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_custom_fields.php';
 
-// Load config
-
-// require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_cpt_config.php';
-
-// Load deactivation function (cleanup) ... move this out of loops-cpt.php to "functions/loopis_cpt_deactivate.php
-
-// Load Ajax JS
+// Load Ajax JS for user field and form validation JS for url field in loopis_custom_fields.php
 
 add_action('admin_enqueue_scripts', 'loopis_enqueue_admin_scripts');
 
@@ -64,9 +58,19 @@ function loopis_enqueue_admin_scripts() {
         '1.0'
     );
 
+    // JS for URL validation
+    wp_enqueue_script(
+        'loopis-form-validate',
+        plugin_dir_url( __FILE__ ) . '/assets/js/loopis-form-validate.js',
+        [],
+        '1.0',
+        true
+    );
+
 }
 
-// Load PHP-Ajax handler for single and multiple user select in custom fields
+// Load PHP-Ajax handler for single and multiple user select in loopis_custom_fields.php
+
 add_action('wp_ajax_loopis_user_search', 'loopis_user_ajax_search');
 
 function loopis_user_ajax_search() {
@@ -103,7 +107,7 @@ function loopis_user_ajax_search() {
     wp_send_json_success($results);
 }
 
-// Save function for taxonomy field
+// Save function for taxonomy field in loopis_custom_fields.php
 
 function loopis_save_taxonomy_field( $post_id ) {
 

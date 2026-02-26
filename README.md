@@ -6,6 +6,9 @@ This plugin is currently being developed by volunteers under the name "The Devel
 
 ## 📋 Changelog
 
+**0.3.1 (2026-02-26)**<br>
+some fixes for CPTs + translated some comments + cleanup
+
 **0.3 (2026-02-26)**<br>
 changed the names to the correct ones + some fixes
 
