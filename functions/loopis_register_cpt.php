@@ -6,7 +6,7 @@
 
 // Prevent direct access
 if (!defined('ABSPATH')) { 
-    exit; 
+    exit;
 }
 
 function register_cpts() {
@@ -30,7 +30,7 @@ function register_cpts() {
         'show_in_admin_bar'     => true,
         'exclude_from_search'   => false,
         'show_ui'               => true,
-        'show_in_menu'          => true,
+        'show_in_menu'          => false,
         'menu_icon'             => 'dashicons-sticky',
         'hierarchical'          => true,
         'has_archive'           => 'faq',
@@ -136,7 +136,7 @@ function register_cpts() {
         ],
     ],
 
-    // add more CPTs here
+    // Add more CPTs here
 
     ];
 

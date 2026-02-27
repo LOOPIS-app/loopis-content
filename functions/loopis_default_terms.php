@@ -19,7 +19,7 @@ function loopis_add_default_terms() {
 
     $defaults = [
 
-        // FAQ-kategorier
+        // FAQ categories
         'faq-category' => [
             [
                 'name' => 'Instruktioner',
@@ -41,9 +41,17 @@ function loopis_add_default_terms() {
                 'name' => 'Om föreningen',
                 'slug' => 'organisation',
             ],
+            [
+                'name' => 'Support',
+                'slug' => 'support',
+            ],
+            [
+                'name' => 'Kontakt',
+                'slug' => 'contact',
+            ],            
         ],
 
-        // Forumkategorier
+        // Forum categories
         'forum-category' => [
             [
                 'name' => '✨ Nyhet',
@@ -71,7 +79,7 @@ function loopis_add_default_terms() {
             ],
         ],
 
-        // Supportkategorier
+        // Support categories
         'support-status' => [
             [
                 'name' => '⚠ Pågående',
@@ -108,7 +116,9 @@ function loopis_add_default_terms() {
     }
 }
 
-add_action('init', 'loopis_add_default_terms'); // Denna kan du senare flytta till register_activation_hook
+// Add the function in init and on register activation hook
+
+add_action('init', 'loopis_add_default_terms');
 
 register_activation_hook( __FILE__, 'loopis_add_default_terms' );
 
