@@ -1,30 +1,12 @@
-# LOOPIS Content
-Plugin configuring the post content of LOOPIS.app<br>
+# 🗂 LOOPIS Content
+**Plugin for configuring and creating the post content of LOOPIS.app**
 
 ## 💡 Status
-This plugin is currently being developed by volunteers under the name "The Develoopers".<br>
+We are working on replacing third party plugins like "ACF" and "WPUM Frontend Posting" → [CHANGELOG.md](CHANGELOG.md)
 
-## 📋 Changelog
-
-**0.3.1 (2026-02-26)**<br>
-some fixes for CPTs + translated some comments + cleanup
-
-**0.3 (2026-02-26)**<br>
-changed the names to the correct ones + some fixes
-
-**0.2 (2026-02-20)**<br>
-added taxonomy field + name change of plugin (loopis-cpt -> loopis-content)
-
-**0.1 (2026-02-19)**<br>
-added URL validation + cleanup
-
-**0.0 (2026-02-17)**<br>
-first commit + cleanup
-
-## 💾 Installation/Update
-Upload the zipped folder "loopis-content.zip" using **WP Admin > Plugins > Add Plugin > Upload Plugin**.
-After installation of plugin: Flush permalinks: Settings - Permalinks - Save Changes
-
+## 💾 Installation
+Installation + updates will be managed by plugin "LOOPIS Config".
+After installation: Flush permalinks in WP Admin settings!
 
 ## 👤 Contributors
-Nils Larsson, Hubert Hilborn, Johan Hagvil<br>
+Nils Larsson, Hubert Hilborn, Johan Hagvil
