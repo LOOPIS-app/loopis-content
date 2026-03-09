@@ -1,5 +1,3 @@
-console.log('loopis-admin-validate.js loaded');
-
 wp.domReady(() => {
 
     const { subscribe, select, dispatch } = wp.data;

@@ -21,6 +21,7 @@ function register_cpts() {
             'singular_name' => 'FAQ-post',
 			'add_new_item'  => 'Add new FAQ',
             'search_items'  => 'Search FAQs',
+            'not_found'     => 'No FAQs found',
         ],
 
         'public'                => true,
@@ -37,6 +38,7 @@ function register_cpts() {
         'query_var'             => 'faq',
         'map_meta_cap'          => true,
         'menu_position'         => 13,
+        'taxonomies'            => ['faq-tag'],
 
         'rewrite' => [
             'slug'          => 'faq',
@@ -62,6 +64,7 @@ function register_cpts() {
             'singular_name' => 'Forum-post',
 			'add_new_item'  => 'Add new Forum post',
             'search_items'  => 'Search Forum posts',
+            'not_found'     => 'No forum posts found',
         ],
 
         'public'                => true,
@@ -103,6 +106,7 @@ function register_cpts() {
             'singular_name' => 'Support-post',
             'add_new_item'  => 'Add new support post',
             'search_items'  => 'Search support posts',
+            'not_found'     => 'No support posts found',
         ],
 
         'public'                => true,

@@ -19,8 +19,9 @@ function loopis_add_default_terms() {
 
     $defaults = [
 
-        // FAQ categories
-        'faq-category' => [
+        // FAQ tags
+
+        'faq-tag' => [
             [
                 'name' => 'Instruktioner',
                 'slug' => 'instructions',
@@ -52,6 +53,7 @@ function loopis_add_default_terms() {
         ],
 
         // Forum categories
+
         'forum-category' => [
             [
                 'name' => '✨ Nyhet',
@@ -80,6 +82,7 @@ function loopis_add_default_terms() {
         ],
 
         // Support categories
+        
         'support-status' => [
             [
                 'name' => '⚠ Pågående',

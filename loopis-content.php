@@ -3,7 +3,7 @@
 * Plugin Name: LOOPIS Content
 * Plugin URI:  https://github.com/LOOPIS-app/loopis-content
 * Description: Plugin for handling custom post types & related taxonomies
-* Version: 0.3
+* Version: 0.3.2
 * Author: nissegit
 * Text Domain: loopis-content
 */
@@ -13,10 +13,6 @@ if (!defined('ABSPATH')) {
     exit; 
 }
 
-// Load CPTs
-
-require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_register_cpt.php';
-
 // Load taxonomies
 
 require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_register_tax.php';
@@ -24,6 +20,10 @@ require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_register_tax.php';
 // Load default terms in taxonomies
 
 require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_default_terms.php';
+
+// Load CPTs
+
+require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_register_cpt.php';
 
 // Load custom fields
 

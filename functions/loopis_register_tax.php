@@ -15,33 +15,36 @@ function register_taxonomies() {
 
         // A taxonomy for the CPT type 'faq' with the name 'faq-categories' etc
         
-        'faq-category' => [
+        'faq-tag' => [
             'post_type' => 'faq',
-            'slug' => 'faq-category',
-            'name' => 'FAQ-categories',
-            'hierarchical' => true,
+            'slug' => 'faq-tag',
+            'name' => 'FAQ-tags',
+            'hierarchical' => false, // false for "tags" (not hierarchical taxonomy type)
             'show_ui'           => true,
             'show_in_nav_menus' => true,
             'show_tagcloud'     => true,
             'show_admin_column' => true,
+            'public'            => true,
         ],
 
         'forum-category' => [
             'post_type' => 'forum',
             'slug' => 'forum-category',
             'name' => 'Forum-categories',
-            'hierarchical' => true,
+            'hierarchical' => true, // hierarchical categories 
             'show_admin_column' => true,
             'show_tagcloud'     => true,
+            'public'            => true,
         ],
         
         'support-status' => [
             'post_type' => 'support',
             'slug' => 'support-status',
             'name' => 'Support-status',
-            'hierarchical' => true,
+            'hierarchical' => true, // hierarchical categories
             'show_tagcloud'     => true,
             'show_admin_column' => true,
+            'public'            => true,
         ],
 
         // Add more taxonomies here
@@ -54,10 +57,11 @@ function register_taxonomies() {
                 'name' => $tax['name'],
             ],
             'hierarchical' => $tax['hierarchical'],
-            'rewrite' => [ 'slug' => $tax['slug'] ],
+            'rewrite' => [ 'slug' => $tax['slug'], 'with_front' => false ],
             'show_in_rest'      => true,
             'show_admin_column' => $tax['show_admin_column'],
             'show_tagcloud'     => $tax['show_tagcloud'],
+            'public'            => $tax['public'],
         ] );
     }
 
