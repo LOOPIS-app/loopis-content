@@ -22,7 +22,7 @@ function loopis_enqueue_datetime_picker( $hook ) {
     // Optional: only on certain CPTs
     // This loads the scripts only for editing the specified post types: post, FAQ, forum and support
     $screen = get_current_screen();
-    if ( ! in_array( $screen->post_type, [ 'post', 'supportz' ], true ) ) {
+    if ( ! in_array( $screen->post_type, [ 'post', 'support' ], true ) ) {
         return;
     }
 
@@ -54,7 +54,11 @@ function loopis_enqueue_datetime_picker( $hook ) {
 
 }
 
-// Field groups with custom fields
+/**
+ * Field groups with custom fields
+ * Nullable option: if true, meta_key + meta_value will be removed in postmeta table if there is no value in the field
+ * if false: meta_key will remain in the postmeta table
+ */
 
 function loopis_get_field_groups() {
 
@@ -69,24 +73,25 @@ function loopis_get_field_groups() {
                 'title' => [
                     'label' => 'Title',
                     'type'  => 'text',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'link' => [
                     'label' => 'Link',
                     'type'  => 'url',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'status' => [
                     'label' => 'Status',
                     'type'  => 'taxonomy',
                     'taxonomy' => 'support-status', // needed for the taxonomy field
-                    'nullable' => true,
+                    'nullable' => false,
+                    'default' => 198, // default status: pågående, remove 'default' => 198, to remove default value
                 ],
                 'invited' => [
                     'label' => 'Invited',
                     'type'  => 'user_ajax',
                     'multiple' => true, // needed for multiple users
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
 
             ],
@@ -102,105 +107,106 @@ function loopis_get_field_groups() {
                 'location' => [
                     'label' => 'Location',
                     'type'  => 'text',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'custom_location' => [
                     'label' => 'Location (custom)',
                     'type'  => 'text',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'locker_number' => [
                     'label' => 'Locker number',
                     'type'  => 'number',
-                    'nullable' => true,
+                    'nullable' => false,
+                    'default' => 001, // default number: 001, remove 'default' => 001, to remove default value
                 ],
                 'image_2' => [
                     'label' => 'Extra image?',
                     'type'  => 'image',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'participants' => [
                     'label' => 'Participants',
                     'type'  => 'user_ajax',
                     'multiple' => true, // needed for multiple users
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'fetcher' => [
                     'label' => 'Fetcher',
                     'type'  => 'user_ajax',
                     'multiple' => false, // needed for single user
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'queue' => [
                     'label' => 'Queue',
                     'type'  => 'user_ajax',
                     'multiple' => true, // needed for multiple users
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'raffle_date' => [
                     'label' => 'Raffle date',
                     'type'  => 'datetime', // datetime is a custom created format, see the datetime case in the render meta box function
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'book_date' => [
                     'label' => 'Book date',
                     'type'  => 'datetime',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'locker_date' => [
                     'label' => 'Locker date',
                     'type'  => 'datetime',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'fetch_date' => [
                     'label' => 'Fetch date',
                     'type'  => 'datetime',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'forward_date' => [
                     'label' => 'Forward date',
                     'type'  => 'datetime',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'remove_date' => [
                     'label' => 'Remove date',
                     'type'  => 'datetime',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'pause_date' => [
                     'label' => 'Pause date',
                     'type'  => 'datetime',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'archive_date' => [
                     'label' => 'Archive date',
                     'type'  => 'datetime',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'extend_date' => [
                     'label' => 'Extend date',
                     'type'  => 'datetime',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'forward_post' => [
                     'label' => 'Forward post',
                     'type'  => 'number',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'previous_post' => [
                     'label' => 'Previous post',
                     'type'  => 'number',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'reminder_leave' => [
                     'label' => 'Reminder leave',
                     'type'  => 'number',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
                 'reminder_fetch' => [
                     'label' => 'Reminder fetch',
                     'type'  => 'number',
-                    'nullable' => true,
+                    'nullable' => false,
                 ],
             ],
         ],
@@ -256,20 +262,28 @@ function loopis_render_meta_box( $post, $box ) {
 
         switch ( $field['type'] ) {
 
-            case 'text': // används eventuellt inte 
-                echo '<input type="url" class="regular-text" 
+            case 'text':
+                echo '<input type="text" class="regular-text" 
                 name="' . esc_attr( $key ) . '" 
                 value="' . esc_attr( $value ) . '">';
                 break;
             
-            case 'number': // kontrollera att "text" är rätt, och inte t.ex. "input type=number" = ska vara, kolla upp rimligt "class name" 
+            case 'number':
+                // If nothing is entered, check if $field['default'] is set, if so set $value to it
+                if ($value === '' || $value === null) {
+                    if ( isset($field['default'])) {
+                        $value = $field['default'];
+                    } else {
+                        $value = ''; // Else take user input
+                    }
+                }
+
                 echo '<input type="number" class="regular-number" 
                  name="' . esc_attr( $key ) . '" 
                  value="' . esc_attr( $value ) . '">';
                 break;
 
             case 'user_ajax':
-
                 // Decide if the field should be multi or single
                 $multiple = ! empty( $field['multiple'] );
                 $mode     = $multiple ? 'multi' : 'single';
@@ -331,7 +345,6 @@ function loopis_render_meta_box( $post, $box ) {
                 break;
 
             case 'taxonomy':
-
                 $taxonomy = $field['taxonomy'];
 
                 if ( ! taxonomy_exists( $taxonomy ) ) {
@@ -350,7 +363,13 @@ function loopis_render_meta_box( $post, $box ) {
                     ['fields' => 'ids']
                 );
 
+                // Take the first saved term if it exists
                 $selected = $selected_terms[0] ?? '';
+
+                // If nothing is saved, use default from the field array
+                if ( empty( $selected ) && ! empty( $field['default'] ) ) {
+                    $selected = $field['default'];
+                }
 
                 echo '<select name="' . esc_attr( $key ) . '" class="loopis-taxonomy-select">';
 
@@ -397,79 +416,104 @@ add_action( 'save_post', 'loopis_save_fields' );
 function loopis_save_fields( $post_id ) {
 
     if ( ! isset( $_POST['loopis_fields_nonce'] ) ) return;
-
     if ( ! wp_verify_nonce( $_POST['loopis_fields_nonce'], 'loopis_save_fields' ) ) return;
-
     if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
-    
     if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+
+    // Get post type for current post
+    $current_post_type = get_post_type( $post_id );
 
     foreach ( loopis_get_field_groups() as $group ) {
 
+        // Skip field groups that don't belong to this post type
+        if ( ! isset( $group['post_types'] ) || ! in_array( $current_post_type, $group['post_types'], true ) ) {
+            continue;
+        }
+
         foreach ( $group['fields'] as $key => $field ) {
 
-            // Check for nullable fields
-            $field['nullable'] = $field['nullable'] ?? true;
-            
-            // Meta fields
+            // Null check. Set default nullable = false
+            $field['nullable'] = $field['nullable'] ?? false;
 
-            if ( ! isset( $_POST[ $key ] ) ) {
+            // Get the value from the form else set to empty string
+            $value = $_POST[ $key ] ?? '';
 
-            if ( ! empty( $field['nullable'] ) ) {
+            // If the field is nullable and the value is empty => remove meta (meta_key)
+            if ( $field['nullable'] && empty( $value ) ) {
                 delete_post_meta( $post_id, $key );
+                continue; // continue to the next field
             }
 
-            continue;
-            }
-
-            $value = $_POST[ $key ];
-
+            // Type specific sanitation / validation
             switch ( $field['type'] ) {
+
+                case 'text':
+                    $value = sanitize_text_field( $value );
+                    break;
+
                 case 'number':
-                    $value = floatval( $value );
+                    // Allow 0 in numbers (not regarded as empty)
+                    if ( isset($_POST[$key]) && $_POST[$key] !== '' ) {
+                        
+                        // Convert to int
+                        $value = intval($_POST[$key]);
+
+                    } else {
+                        // Set to empty string if nothing is entered
+                        $value = '';
+                    }
                     break;
 
                 case 'url':
-                    
+
                     // Backend validation
                     $value = trim( $value );
-                    
-                    // Null or nothing is OK (not registered in DB)
-                    if ( $value === '' ) {
-                        delete_post_meta( $post_id, $key, '' );
-                        return;
+
+                    // Only accept URLs that start with https://
+                    if ( ! str_starts_with( $value, 'https://' ) || ! filter_var( $value, FILTER_VALIDATE_URL ) ) {
+                        delete_post_meta( $post_id, $key );
+                        continue; // skip this field
                     }
 
-                    // Only accept URL:s that starts with https://
-                    if ( ! str_starts_with( $value, 'https://' ) ) {
-                        delete_post_meta( $post_id, $key );
-                        return;
-                    }
-                    
-                    // Validate the URL
-                    if ( ! filter_var( $value, FILTER_VALIDATE_URL ) ) {
-                        delete_post_meta( $post_id, $key );
-                        return;
-                    }
-
-                    update_post_meta( $post_id, $key, esc_url_raw( $value ) );
+                    $value = esc_url_raw( $value );
                     break;
-                
+
                 case 'user_ajax':
 
                     if ( ! empty( $field['multiple'] ) ) {
-                        $val = isset($_POST[$key]) ? array_map('intval', (array) $_POST[$key]) : [];
-                        update_post_meta($post_id, $key, $val);
+                        // Get value from the form or empty array if nothing is entered
+                        $value = isset($_POST[$key]) ? array_map('intval', (array) $_POST[$key]) : [];
+
+                        // If the array is empty ( [] == empty) ) => normalize to empty string
+                        if ( empty($value) ) {
+                            $value = '';
+                        }
+
                     } else {
-                        $val = isset($_POST[$key]) ? intval($_POST[$key]) : '';
-                        update_post_meta($post_id, $key, $val);
+                        $value = isset($_POST[$key]) ? intval($_POST[$key]) : '';
                     }
                     break;
-                
+
+                case 'datetime':
+
+                    // Sanitize text
+                    $value = sanitize_text_field( $value );
+
+                    // Validate format YYYY-MM-DD HH:MM:SS
+                    if ( ! empty( $value ) ) {
+                        $date = DateTime::createFromFormat('Y-m-d H:i:s', $value);
+                        if ( ! $date || $date->format('Y-m-d H:i:s') !== $value ) {
+                            $value = ''; // Invalid → empty string
+                        }
+                    }
+                    break;
+
                 default:
                     $value = sanitize_text_field( $value );
+                    break;
             }
 
+            // Save post meta once per field, after sanitation
             update_post_meta( $post_id, $key, $value );
         }
     }
