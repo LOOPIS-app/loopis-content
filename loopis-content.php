@@ -1,12 +1,25 @@
 <?php
 /**
-* Plugin Name: LOOPIS Content
-* Plugin URI:  https://github.com/LOOPIS-app/loopis-content
-* Description: Plugin for handling custom post types & related taxonomies
-* Version: 0.3.2
-* Author: nissegit
-* Text Domain: loopis-content
+* Plugin Name:  LOOPIS Content
+* Plugin URI:   https://github.com/LOOPIS-app/loopis-content
+* Description:  Plugin for configuring and creating the post content of LOOPIS.app
+* Version:      0.32
+* Author:       The Develoopers
+* Author URI:   https://loopis.org
+* License:      GPL-3.0-or-later
+* License URI:  https://www.gnu.org/licenses/gpl-3.0.html
+* Text Domain:  loopis-content
 */
+
+/*
+ * Copyright (C) 2026 LOOPIS
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+
 
 // Prevent direct access
 if (!defined('ABSPATH')) { 
@@ -14,23 +27,24 @@ if (!defined('ABSPATH')) {
 }
 
 // Load taxonomies
-
 require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_register_tax.php';
 
 // Load default terms in taxonomies
-
 require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_default_terms.php';
 
 // Load CPTs
-
 require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_register_cpt.php';
 
-// Load custom fields
+// Flush rewrite rules on activation for CPT archives to resolve correctly
+register_activation_hook( __FILE__, function() {
+    register_cpts();
+    flush_rewrite_rules();
+} );
 
+// Load custom fields
 require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_custom_fields.php';
 
 // Load Ajax JS for user field and form validation JS for url field in loopis_custom_fields.php
-
 add_action('admin_enqueue_scripts', 'loopis_enqueue_admin_scripts');
 
 function loopis_enqueue_admin_scripts() {
@@ -70,7 +84,6 @@ function loopis_enqueue_admin_scripts() {
 }
 
 // Load PHP-Ajax handler for single and multiple user select in loopis_custom_fields.php
-
 add_action('wp_ajax_loopis_user_search', 'loopis_user_ajax_search');
 
 function loopis_user_ajax_search() {
@@ -108,7 +121,6 @@ function loopis_user_ajax_search() {
 }
 
 // Save function for taxonomy field in loopis_custom_fields.php
-
 function loopis_save_taxonomy_field( $post_id ) {
 
     if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
