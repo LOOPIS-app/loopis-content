@@ -56,8 +56,8 @@ function loopis_enqueue_datetime_picker( $hook ) {
 
 /**
  * Field groups with custom fields
- * Nullable option: if true, meta_key + meta_value will be removed in postmeta table if there is no value in the field
- * if false: meta_key will remain in the postmeta table
+ * remove_when_empty option: if true, meta_key + meta_value will be removed in postmeta table if there is no value in the field
+ * if false: meta_key will remain in the postmeta table with an empty string '' as meta_value
  */
 
 function loopis_get_field_groups() {
@@ -73,32 +73,32 @@ function loopis_get_field_groups() {
                 'title' => [
                     'label' => 'Title',
                     'type'  => 'text',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'link' => [
                     'label' => 'Link',
                     'type'  => 'url',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'status' => [
                     'label' => 'Status',
                     'type'  => 'taxonomy',
                     'taxonomy' => 'support-status', // needed for the taxonomy field
-                    'nullable' => false,
+                    'remove_when_empty' => false, // false, will never be empty because of the default value
                     'default' => 198, // default status: pågående, remove 'default' => 198, to remove default value
                 ],
                 'invited' => [
                     'label' => 'Invited',
                     'type'  => 'user_ajax',
                     'multiple' => true, // needed for multiple users
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
 
             ],
         ],
 
         // Field group: 'post_meta', custom fields: 'location', 'custom_location', etc
-        // Allow null, true for all fields
+        // remove_when_empty, true for all fields except for the user_ajax fields 'participants' and 'fetcher'
 
         'post_meta' => [
             'title' => 'Post Data Fields',
@@ -107,106 +107,106 @@ function loopis_get_field_groups() {
                 'location' => [
                     'label' => 'Location',
                     'type'  => 'text',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'custom_location' => [
                     'label' => 'Location (custom)',
                     'type'  => 'text',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'locker_number' => [
                     'label' => 'Locker number',
                     'type'  => 'number',
-                    'nullable' => false,
+                    'remove_when_empty' => true, // true but will never be empty because of the default value
                     'default' => 001, // default number: 001, remove 'default' => 001, to remove default value
                 ],
                 'image_2' => [
                     'label' => 'Extra image?',
                     'type'  => 'image',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'participants' => [
                     'label' => 'Participants',
                     'type'  => 'user_ajax',
                     'multiple' => true, // needed for multiple users
-                    'nullable' => false,
+                    'remove_when_empty' => false, // will keep the meta_key with empty value ('')
                 ],
                 'fetcher' => [
                     'label' => 'Fetcher',
                     'type'  => 'user_ajax',
-                    'multiple' => false, // needed for single user
-                    'nullable' => false,
+                    'multiple' => false, // needed for single user, difference from ACF: this value can be empty, in ACF it can't be cleared from WPAA/Gutenberg
+                    'remove_when_empty' => false, // will keep the meta_key with empty value ('')
                 ],
                 'queue' => [
                     'label' => 'Queue',
                     'type'  => 'user_ajax',
                     'multiple' => true, // needed for multiple users
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'raffle_date' => [
                     'label' => 'Raffle date',
                     'type'  => 'datetime', // datetime is a custom created format, see the datetime case in the render meta box function
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'book_date' => [
                     'label' => 'Book date',
                     'type'  => 'datetime',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'locker_date' => [
                     'label' => 'Locker date',
                     'type'  => 'datetime',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'fetch_date' => [
                     'label' => 'Fetch date',
                     'type'  => 'datetime',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'forward_date' => [
                     'label' => 'Forward date',
                     'type'  => 'datetime',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'remove_date' => [
                     'label' => 'Remove date',
                     'type'  => 'datetime',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'pause_date' => [
                     'label' => 'Pause date',
                     'type'  => 'datetime',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'archive_date' => [
                     'label' => 'Archive date',
                     'type'  => 'datetime',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'extend_date' => [
                     'label' => 'Extend date',
                     'type'  => 'datetime',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'forward_post' => [
                     'label' => 'Forward post',
                     'type'  => 'number',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'previous_post' => [
                     'label' => 'Previous post',
                     'type'  => 'number',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'reminder_leave' => [
                     'label' => 'Reminder leave',
                     'type'  => 'number',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
                 'reminder_fetch' => [
                     'label' => 'Reminder fetch',
                     'type'  => 'number',
-                    'nullable' => false,
+                    'remove_when_empty' => true,
                 ],
             ],
         ],
@@ -265,7 +265,9 @@ function loopis_render_meta_box( $post, $box ) {
             case 'text':
                 echo '<input type="text" class="regular-text" 
                 name="' . esc_attr( $key ) . '" 
-                value="' . esc_attr( $value ) . '">';
+                value="' . esc_attr( $value ) . '"
+                maxlength="255">';
+                echo '<p>Input text (max 255 characters)</p>';
                 break;
             
             case 'number':
@@ -278,9 +280,10 @@ function loopis_render_meta_box( $post, $box ) {
                     }
                 }
 
-                echo '<input type="number" class="regular-number" 
-                 name="' . esc_attr( $key ) . '" 
-                 value="' . esc_attr( $value ) . '">';
+                echo '<input type="number" 
+                name="' . esc_attr( $key ) . '" 
+                value="' . esc_attr( $value ) . '">';
+                echo '<p>Input a number</p>';
                 break;
 
             case 'user_ajax':
@@ -334,6 +337,7 @@ function loopis_render_meta_box( $post, $box ) {
                 echo '<div class="loopis-user-results"></div>';
 
                 echo '</div>'; // end of wrapper
+                echo '<p class="description">Add user|s</p>';
                 break;
 
             case 'url':
@@ -342,6 +346,7 @@ function loopis_render_meta_box( $post, $box ) {
                 value="' . esc_attr( $value ) . '"
                 placeholder="https://example.com"
                 >';
+                echo '<p>Insert a valid URL starting with https://</p>';
                 break;
 
             case 'taxonomy':
@@ -383,6 +388,7 @@ function loopis_render_meta_box( $post, $box ) {
                 }
 
                 echo '</select>';
+                echo '<p>Choose taxonomy</p>';
 
             break;
 
@@ -395,6 +401,7 @@ function loopis_render_meta_box( $post, $box ) {
                 placeholder="YYYY-MM-DD HH:MM:SS"
                 title="Format: YYYY-MM-DD HH:MM:SS"
                 >';
+                echo '<p>Insert a date</p>';
                 break;
 
             case 'image':
@@ -432,14 +439,19 @@ function loopis_save_fields( $post_id ) {
 
         foreach ( $group['fields'] as $key => $field ) {
 
-            // Null check. Set default nullable = false
-            $field['nullable'] = $field['nullable'] ?? false;
+            // remove_when_empty check: Set default remove_when_empty = true (removes meta_key + meta_value when empty)
+            $field['remove_when_empty'] = $field['remove_when_empty'] ?? true;
 
             // Get the value from the form else set to empty string
             $value = $_POST[ $key ] ?? '';
 
-            // If the field is nullable and the value is empty => remove meta (meta_key)
-            if ( $field['nullable'] && empty( $value ) ) {
+            // If a default is configured and no input, use it (so default behavior is preserved)
+            if ( empty( $value ) && isset( $field['default'] ) ) {
+                $value = $field['default'];
+            }
+
+            // If remove_when_empty is true and the value is empty => remove meta (meta_key + meta_value)
+            if ( $field['remove_when_empty'] && empty( $value ) ) {
                 delete_post_meta( $post_id, $key );
                 continue; // continue to the next field
             }
@@ -448,7 +460,14 @@ function loopis_save_fields( $post_id ) {
             switch ( $field['type'] ) {
 
                 case 'text':
+                    
                     $value = sanitize_text_field( $value );
+
+                    // Limit to 255 characters using mb_substr for multi-byte safety
+                    if ( mb_strlen( $value ) > 255 ) {
+                        $value = mb_substr( $value, 0, 255 );
+                    }
+
                     break;
 
                 case 'number':
@@ -469,10 +488,19 @@ function loopis_save_fields( $post_id ) {
                     // Backend validation
                     $value = trim( $value );
 
-                    // Only accept URLs that start with https://
-                    if ( ! str_starts_with( $value, 'https://' ) || ! filter_var( $value, FILTER_VALIDATE_URL ) ) {
-                        delete_post_meta( $post_id, $key );
-                        continue; // skip this field
+                    // Length check, limit to 2048 characters
+                    if ( mb_strlen($value) > 2048 ) {
+                        delete_post_meta($post_id, $key);
+                        continue 2;
+                    }
+
+                    // Validate URL only when not empty; empty handling is handled elsewhere (starting on line 448)
+                    if ( ! empty( $value ) ) {
+                        // Only accept URLs that start with https://
+                        if ( ! str_starts_with( $value, 'https://' ) || ! filter_var( $value, FILTER_VALIDATE_URL ) ) {
+                            delete_post_meta( $post_id, $key );
+                            continue 2; // skip this field
+                        }
                     }
 
                     $value = esc_url_raw( $value );
@@ -505,6 +533,36 @@ function loopis_save_fields( $post_id ) {
                         if ( ! $date || $date->format('Y-m-d H:i:s') !== $value ) {
                             $value = ''; // Invalid → empty string
                         }
+                    }
+                    break;
+
+                case 'taxonomy':
+                    // Validate term ID is numeric and exists
+                    if ( ! empty( $value ) ) {
+                        $value = intval( $value );
+                        $taxonomy = isset( $field['taxonomy'] ) ? $field['taxonomy'] : '';
+                        if ( $taxonomy && ! term_exists( $value, $taxonomy ) ) {
+                            $value = ''; // Invalid term → empty string
+                        }
+                    } else {
+                        $value = '';
+                    }
+
+                    // Continue to update_post_meta() so we keep the taxonomy value in postmeta, too.
+                    // See also save function in loopis-content.php, where wp_set_object_terms is also set.
+                    // Make sure these two sync, in case other functions/plugins rely on the taxonomy value in postmeta.
+                    break;
+
+                case 'image':
+                    // Validate media ID is numeric and attachment exists
+                    if ( ! empty( $value ) ) {
+                        $value = intval( $value );
+                        /* for extra strict validation, we could check if the attachment exists and is an image
+                        if ( get_post_type( $value ) !== 'attachment' ) {
+                            $value = ''; // Invalid attachment → empty string
+                        }*/
+                    } else {
+                        $value = '';
                     }
                     break;
 

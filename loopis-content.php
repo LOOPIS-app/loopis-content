@@ -3,7 +3,7 @@
 * Plugin Name:  LOOPIS Content
 * Plugin URI:   https://github.com/LOOPIS-app/loopis-content
 * Description:  Plugin for configuring and creating the post content of LOOPIS.app
-* Version:      0.32
+* Version:      0.34
 * Author:       The Develoopers
 * Author URI:   https://loopis.org
 * License:      GPL-3.0-or-later
@@ -120,23 +120,46 @@ function loopis_user_ajax_search() {
     wp_send_json_success($results);
 }
 
-// Save function for taxonomy field in loopis_custom_fields.php
+// Save function for taxonomy fields from loopis_custom_fields.php
 function loopis_save_taxonomy_field( $post_id ) {
 
     if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
     if ( wp_is_post_revision( $post_id ) ) return;
+    if ( ! isset($_POST['loopis_fields_nonce']) ) return;
+    if ( ! wp_verify_nonce($_POST['loopis_fields_nonce'], 'loopis_save_fields') ) return;
 
-    if ( ! isset($_REQUEST['status']) ) return;
+    // Get field groups to find taxonomy fields
+    require_once plugin_dir_path(__FILE__) . '/functions/loopis_custom_fields.php';
+    $groups = loopis_get_field_groups();
+    $current_post_type = get_post_type($post_id);
 
-    $taxonomy = 'support-status';
-    $term_id  = intval( $_REQUEST['status'] );
+    foreach ($groups as $group) {
+        if (!in_array($current_post_type, $group['post_types'], true)) {
+            continue;
+        }
 
-    if ( $term_id ) {
-        wp_set_object_terms( $post_id, [ $term_id ], $taxonomy, false );
-    } else {
-        wp_set_object_terms( $post_id, [], $taxonomy, false );
+        foreach ($group['fields'] as $key => $field) {
+            if ($field['type'] !== 'taxonomy') {
+                continue;
+            }
+
+            $taxonomy = $field['taxonomy'] ?? '';
+            if (!$taxonomy || !taxonomy_exists($taxonomy)) {
+                continue;
+            }
+
+            $term_id = isset($_POST[$key]) ? intval($_POST[$key]) : 0;
+
+            if ($term_id && term_exists($term_id, $taxonomy)) {
+                wp_set_object_terms($post_id, [$term_id], $taxonomy, false);
+            } else {
+                wp_set_object_terms($post_id, [], $taxonomy, false);
+            }
+        }
     }
-
 }
+
+// Note: This hook runs at priority 20. If conflicts occur with other plugins,
+// consider increasing this priority or reducing to "15" (after postmeta saves).
 add_action('save_post', 'loopis_save_taxonomy_field', 20);
 

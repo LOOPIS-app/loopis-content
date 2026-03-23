@@ -1,5 +1,10 @@
 # 📋 Changelog for "LOOPIS Content"
 
+# 0.34 (2026-03-22)
+- Renamed 'nullable' to 'remove_when_empty' for clarity
+- Changed some settings so it aligns with requirements / old ACF settings
+- Some small fixes
+
 ## 0.33 (2026-03-20)
 - Added flush of rewrite rules on activation for CPT archives to resolve correctly
 - Live deployment!
