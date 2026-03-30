@@ -1,6 +1,7 @@
 # 📋 Changelog for "LOOPIS Content"
 
-# 0.34 (2026-03-22)
+# 0.34 (2026-03-30)
+- First version live! Replacing plugin "ACF".
 - Renamed 'nullable' to 'remove_when_empty' for clarity
 - Changed some settings so it aligns with requirements / old ACF settings
 - Some small fixes
