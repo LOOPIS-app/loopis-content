@@ -20,7 +20,7 @@ function loopis_enqueue_datetime_picker( $hook ) {
     }
 
     // Optional: only on certain CPTs
-    // This loads the scripts only for editing the specified post types: post, FAQ, forum and support
+    // This loads the scripts only for editing the specified post types: post and support
     $screen = get_current_screen();
     if ( ! in_array( $screen->post_type, [ 'post', 'support' ], true ) ) {
         return;
@@ -73,7 +73,7 @@ function loopis_get_field_groups() {
                 'title' => [
                     'label' => 'Title',
                     'type'  => 'text',
-                    'remove_when_empty' => true,
+                    'remove_when_empty' => true, // true will remove meta_key + meta_value when empty
                 ],
                 'link' => [
                     'label' => 'Link',
@@ -83,7 +83,7 @@ function loopis_get_field_groups() {
                 'status' => [
                     'label' => 'Status',
                     'type'  => 'taxonomy',
-                    'taxonomy' => 'support-status', // needed for the taxonomy field
+                    'taxonomy' => 'support-category', // needed for the taxonomy field
                     'remove_when_empty' => false, // false, will never be empty because of the default value
                     'default' => 198, // default status: pågående, remove 'default' => 198, to remove default value
                 ],
@@ -129,13 +129,13 @@ function loopis_get_field_groups() {
                     'label' => 'Participants',
                     'type'  => 'user_ajax',
                     'multiple' => true, // needed for multiple users
-                    'remove_when_empty' => false, // will keep the meta_key with empty value ('')
+                    'remove_when_empty' => true,
                 ],
                 'fetcher' => [
                     'label' => 'Fetcher',
                     'type'  => 'user_ajax',
                     'multiple' => false, // needed for single user, difference from ACF: this value can be empty, in ACF it can't be cleared from WPAA/Gutenberg
-                    'remove_when_empty' => false, // will keep the meta_key with empty value ('')
+                    'remove_when_empty' => true,
                 ],
                 'queue' => [
                     'label' => 'Queue',

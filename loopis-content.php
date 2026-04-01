@@ -3,7 +3,7 @@
 * Plugin Name:  LOOPIS Content
 * Plugin URI:   https://github.com/LOOPIS-app/loopis-content
 * Description:  Plugin for configuring and creating the post content of LOOPIS.app
-* Version:      0.34
+* Version:      0.35
 * Author:       The Develoopers
 * Author URI:   https://loopis.org
 * License:      GPL-3.0-or-later
@@ -29,8 +29,11 @@ if (!defined('ABSPATH')) {
 // Load taxonomies
 require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_register_tax.php';
 
-// Load default terms in taxonomies
+// Load default terms in taxonomies function
 require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_default_terms.php';
+
+// Add default terms on activation
+register_activation_hook( __FILE__, 'loopis_add_default_terms' );
 
 // Load CPTs
 require_once plugin_dir_path( __FILE__ ) . '/functions/loopis_register_cpt.php';

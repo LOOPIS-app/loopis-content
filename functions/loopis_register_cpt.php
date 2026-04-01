@@ -33,7 +33,7 @@ function register_cpts() {
         'show_ui'               => true,
         'show_in_menu'          => false,
         'menu_icon'             => 'dashicons-sticky',
-        'hierarchical'          => true,
+        'hierarchical'          => false, // for sorting date/desc, treat as post
         'has_archive'           => 'faq',
         'query_var'             => 'faq',
         'map_meta_cap'          => true,
@@ -76,7 +76,7 @@ function register_cpts() {
         'show_ui'               => true,
         'show_in_menu'          => false,
         'menu_icon'             => 'dashicons-admin-comments',
-        'hierarchical'          => true,
+        'hierarchical'          => false, // for sorting date/desc, treat as post
         'has_archive'           => false,
         'query_var'             => 'forum',
         'map_meta_cap'          => true,
@@ -118,7 +118,7 @@ function register_cpts() {
         'show_ui'               => true,
         'show_in_menu'          => false,
         'menu_icon'             => 'dashicons-sos',
-        'hierarchical'          => true,
+        'hierarchical'          => false, // for sorting date/desc, treat as post
         'has_archive'           => false,
         'query_var'             => 'support',
         'map_meta_cap'          => true,

@@ -21,10 +21,10 @@ function register_taxonomies() {
             'name' => 'FAQ-tags',
             'hierarchical' => false, // false for "tags" (not hierarchical taxonomy type)
             'show_ui'           => true,
-            'show_in_nav_menus' => true,
-            'show_tagcloud'     => true,
+            'show_in_nav_menus' => false,
             'show_admin_column' => true,
-            'public'            => true,
+            'show_tagcloud'     => false,
+            'public'            => false,
         ],
 
         'forum-category' => [
@@ -32,19 +32,23 @@ function register_taxonomies() {
             'slug' => 'forum-category',
             'name' => 'Forum-categories',
             'hierarchical' => true, // hierarchical categories 
+            'show_ui'           => true,
+            'show_in_nav_menus' => false,
             'show_admin_column' => true,
-            'show_tagcloud'     => true,
-            'public'            => true,
+            'show_tagcloud'     => false,
+            'public'            => false,
         ],
         
-        'support-status' => [
+        'support-category' => [ 
             'post_type' => 'support',
-            'slug' => 'support-status',
-            'name' => 'Support-status',
+            'slug' => 'support-category',
+            'name' => 'Support-categories',
             'hierarchical' => true, // hierarchical categories
-            'show_tagcloud'     => true,
+            'show_ui'           => true,
+            'show_in_nav_menus' => false,
             'show_admin_column' => true,
-            'public'            => true,
+            'show_tagcloud'     => false,
+            'public'            => false,
         ],
 
         // Add more taxonomies here
@@ -56,8 +60,12 @@ function register_taxonomies() {
             'labels' => [
                 'name' => $tax['name'],
             ],
-            'hierarchical' => $tax['hierarchical'],
-            'rewrite' => [ 'slug' => $tax['slug'], 'with_front' => false ],
+            'hierarchical'      => $tax['hierarchical'],
+            'rewrite'           => false,
+            'query_var'         => false,
+            'publicly_queryable' => false,
+            'show_ui'           => $tax['show_ui'],
+            'show_in_nav_menus' => $tax['show_in_nav_menus'],
             'show_in_rest'      => true,
             'show_admin_column' => $tax['show_admin_column'],
             'show_tagcloud'     => $tax['show_tagcloud'],

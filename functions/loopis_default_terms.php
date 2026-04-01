@@ -41,15 +41,7 @@ function loopis_add_default_terms() {
             [
                 'name' => 'Om föreningen',
                 'slug' => 'organisation',
-            ],
-            [
-                'name' => 'Support',
-                'slug' => 'support',
-            ],
-            [
-                'name' => 'Kontakt',
-                'slug' => 'contact',
-            ],            
+            ],         
         ],
 
         // Forum categories
@@ -83,7 +75,7 @@ function loopis_add_default_terms() {
 
         // Support categories
         
-        'support-status' => [
+        'support-category' => [
             [
                 'name' => '⚠ Pågående',
                 'slug' => 'active',
@@ -119,10 +111,7 @@ function loopis_add_default_terms() {
     }
 }
 
-// Add the function in init and on register activation hook
-
-add_action('init', 'loopis_add_default_terms');
-
-register_activation_hook( __FILE__, 'loopis_add_default_terms' );
+// Uncomment below line if terms should be recreated if they are removed in WP admin (persist)
+//add_action('init', 'loopis_add_default_terms');
 
 ?>
