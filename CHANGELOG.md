@@ -1,6 +1,12 @@
 # 📋 Changelog for "LOOPIS Content"
 
-# 0.34 (2026-03-30)
+## 0.35 (2026-04-01)
+- Default terms can now be removed from WPAA
+- Default terms are only registered on activation
+- Changed remove_when_empty on the fields in post 'participants' and 'fetcher' to false
+- Changed name of taxonomy support-status => support-category
+
+## 0.34 (2026-03-30)
 - First version live! Replacing plugin "ACF".
 - Renamed 'nullable' to 'remove_when_empty' for clarity
 - Changed some settings so it aligns with requirements / old ACF settings
