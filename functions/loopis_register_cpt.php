@@ -53,6 +53,7 @@ function register_cpts() {
             'editor',
             'excerpt',
             'thumbnail',
+            'author',
         ],
     ],
 
@@ -95,6 +96,8 @@ function register_cpts() {
             'editor',
             'excerpt',
             'thumbnail',
+            'author',
+            'comments',
         ],
     ],
 
@@ -137,6 +140,8 @@ function register_cpts() {
             'editor',
             'excerpt',
             'thumbnail',
+            'author',
+            'comments',
         ],
     ],
 
