@@ -71,24 +71,17 @@ function loopis_get_field_groups() {
             'post_types' => ['support'],
             'fields' => [
                 'title' => [
-                    'label' => 'Title',
+                    'label' => 'Source title',
                     'type'  => 'text',
                     'remove_when_empty' => true, // true will remove meta_key + meta_value when empty
                 ],
                 'link' => [
-                    'label' => 'Link',
+                    'label' => 'Source link',
                     'type'  => 'url',
                     'remove_when_empty' => true,
                 ],
-                'status' => [
-                    'label' => 'Status',
-                    'type'  => 'taxonomy',
-                    'taxonomy' => 'support-category', // needed for the taxonomy field
-                    'remove_when_empty' => false, // false, will never be empty because of the default value
-                    'default' => 198, // default status: pågående, remove 'default' => 198, to remove default value
-                ],
                 'invited' => [
-                    'label' => 'Invited',
+                    'label' => 'Invited members',
                     'type'  => 'user_ajax',
                     'multiple' => true, // needed for multiple users
                     'remove_when_empty' => true,
