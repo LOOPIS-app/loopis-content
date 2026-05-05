@@ -122,7 +122,7 @@ function register_cpts() {
         'show_in_menu'          => false,
         'menu_icon'             => 'dashicons-sos',
         'hierarchical'          => false, // for sorting date/desc, treat as post
-        'has_archive'           => false,
+        'has_archive'           => true,
         'query_var'             => 'support',
         'map_meta_cap'          => true,
         'menu_position'         => 15,
