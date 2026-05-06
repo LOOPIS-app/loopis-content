@@ -17,8 +17,8 @@ function register_cpts() {
 
     'faq' => [
         'labels' => [
-            'name'          => 'FAQ-posts',
-            'singular_name' => 'FAQ-post',
+            'name'          => '💡 Frågor & svar',
+            'singular_name' => '💡 Fråga & svar',
 			'add_new_item'  => 'Add new FAQ',
             'search_items'  => 'Search FAQs',
             'not_found'     => 'No FAQs found',
@@ -61,8 +61,8 @@ function register_cpts() {
 
     'forum' => [
         'labels' => [
-            'name'          => 'Forum-posts',
-            'singular_name' => 'Forum-post',
+            'name'          => '📡 Nyheter',
+            'singular_name' => '📡 Nyhet',
 			'add_new_item'  => 'Add new Forum post',
             'search_items'  => 'Search Forum posts',
             'not_found'     => 'No forum posts found',
@@ -78,7 +78,7 @@ function register_cpts() {
         'show_in_menu'          => false,
         'menu_icon'             => 'dashicons-admin-comments',
         'hierarchical'          => false, // for sorting date/desc, treat as post
-        'has_archive'           => false,
+        'has_archive'           => true,
         'query_var'             => 'forum',
         'map_meta_cap'          => true,
         'menu_position'         => 14,
@@ -105,8 +105,8 @@ function register_cpts() {
     
     'support' => [
         'labels' => [
-            'name'          => 'Support-posts',
-            'singular_name' => 'Support-post',
+            'name'          => '🛟 Support-frågor',
+            'singular_name' => '🛟 Support-fråga',
             'add_new_item'  => 'Add new support post',
             'search_items'  => 'Search support posts',
             'not_found'     => 'No support posts found',
