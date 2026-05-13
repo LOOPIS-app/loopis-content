@@ -1,7 +1,9 @@
 <?php
 /**
- * Function to create default terms
- *
+ * Create default terms for main site.
+ * 
+ * HUBERT TODO:
+ * This should be in "LOOPIS Config"? Because it is database configuration.
  */
 
 // Prevent direct access
@@ -9,18 +11,14 @@ if (!defined('ABSPATH')) {
     exit; 
 }
 
-// Require register taxonomies function
-require_once plugin_dir_path( __FILE__ ) . 'loopis_register_tax.php';
-
-function loopis_add_default_terms() {
+function loopis_terms_hq() {
 
     // Function to add default tags at the right time (before register_activation_hook)
-    register_taxonomies();
+    loopis_tax_hq();
 
     $defaults = [
 
-        // FAQ tags
-
+        // Terms for CPT 'faq' taxonomy 'faq-tag'
         'faq-tag' => [
             [
                 'name' => 'Instruktioner',
@@ -44,12 +42,11 @@ function loopis_add_default_terms() {
             ],         
         ],
 
-        // Forum categories
-
-        'forum-category' => [
+    // Terms for CPT 'news' taxonomy 'news-category'
+        'news-category' => [
             [
-                'name' => '✨ Nyhet',
-                'slug' => 'news',
+                'name' => '✨ Uppdatering',
+                'slug' => 'update',
             ],
             [
                 'name' => '🌈 Aktuellt',
@@ -58,6 +55,10 @@ function loopis_add_default_terms() {
             [
                 'name' => '🗨 Feedback',
                 'slug' => 'feedback',
+            ],
+            [
+                'name' => '🎉 Firande',
+                'slug' => 'celebration',
             ],
             [
                 'name' => '🙌 Hjälp önskas',
@@ -72,20 +73,6 @@ function loopis_add_default_terms() {
                 'slug' => 'tips',
             ],
         ],
-
-        // Support categories
-        
-        'support-category' => [
-            [
-                'name' => '⚠ Pågående',
-                'slug' => 'active',
-            ],
-            [
-                'name' => '✅ Besvarad',
-                'slug' => 'inactive',
-            ],
-        ],
-
     ];
 
     foreach ( $defaults as $taxonomy => $terms ) {
@@ -112,6 +99,4 @@ function loopis_add_default_terms() {
 }
 
 // Uncomment below line if terms should be recreated if they are removed in WP admin (persist)
-//add_action('init', 'loopis_add_default_terms');
-
-?>
+// add_action('init', 'loopis_terms_hq');

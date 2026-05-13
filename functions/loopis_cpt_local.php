@@ -1,7 +1,6 @@
 <?php
 /**
- * Function to register custom CPTs
- *
+ * Register custom post types for single/sub sites.
  */
 
 // Prevent direct access
@@ -9,16 +8,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function register_cpts() {
+function loopis_cpt_local() {
 
  $cpts = [
 
-    // CTP faq
-
+    // Custom post type 'faq'
     'faq' => [
         'labels' => [
-            'name'          => '💡 Frågor & svar',
-            'singular_name' => '💡 Fråga & svar',
+            'name'          => '📌 Frågor & svar',
+            'singular_name' => '📌 Fråga & svar',
 			'add_new_item'  => 'Add new FAQ',
             'search_items'  => 'Search FAQs',
             'not_found'     => 'No FAQs found',
@@ -57,8 +55,7 @@ function register_cpts() {
         ],
     ],
 
-    // CPT forum
-
+    // Custom post type 'forum'
     'forum' => [
         'labels' => [
             'name'          => '📡 Nyheter',
@@ -101,8 +98,7 @@ function register_cpts() {
         ],
     ],
 
-    // CPT support
-    
+    // Custom post type 'support'
     'support' => [
         'labels' => [
             'name'          => '🛟 Support-frågor',
@@ -156,6 +152,4 @@ function register_cpts() {
 
 }
 
-add_action( 'init', 'register_cpts' );
-
-?>
+add_action( 'init', 'loopis_cpt_local' );

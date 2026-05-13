@@ -1,7 +1,6 @@
 <?php
 /**
- * Function to create custom field groups and custom fields
- *
+ * View and edit post custom fields on single/sub sites.
  */
 
 // Prevent direct access
@@ -9,20 +8,12 @@ if (!defined('ABSPATH')) {
     exit; 
 }
 
-// Load scripts and files for the datetime picker
-
-add_action( 'admin_enqueue_scripts', 'loopis_enqueue_datetime_picker' );
-function loopis_enqueue_datetime_picker( $hook ) {
+// Load all admin assets used by custom fields
+add_action( 'admin_enqueue_scripts', 'loopis_enqueue_admin_assets' );
+function loopis_enqueue_admin_assets( $hook ) {
 
     // Only load on post edit screens
     if ( ! in_array( $hook, [ 'post.php', 'post-new.php' ], true ) ) {
-        return;
-    }
-
-    // Optional: only on certain CPTs
-    // This loads the scripts only for editing the specified post types: post and support
-    $screen = get_current_screen();
-    if ( ! in_array( $screen->post_type, [ 'post', 'support' ], true ) ) {
         return;
     }
 
@@ -46,13 +37,126 @@ function loopis_enqueue_datetime_picker( $hook ) {
     // Local JS init script for datetime
     wp_enqueue_script(
         'loopis-datetime',
-        plugin_dir_url( __FILE__ ) . '../assets/js/loopis-datetime.js',
+        LOOPIS_CONTENT_URL . 'assets/js/loopis-datetime.js',
         [ 'flatpickr' ],
         '1.0',
         true
     );
 
+    // Local JS ajax script (jQuery) for adding single or multiple users
+    wp_enqueue_script(
+        'loopis-user-ajax',
+        LOOPIS_CONTENT_URL . 'assets/js/loopis-user-ajax.js',
+        ['jquery'],
+        '1.0',
+        true
+    );
+ 
+    // Using WP admin-ajax for single or multiple users
+    wp_localize_script('loopis-user-ajax', 'loopisUserAjax', [
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce'    => wp_create_nonce('loopis_user_search'),
+    ]);
+
+    // CSS styling for single or multiple users
+    wp_enqueue_style(
+        'custom-css',
+         LOOPIS_CONTENT_URL . 'assets/css/loopis-user-ajax.css',
+        [],
+        '1.0'
+    );
+
+    // JS for URL validation
+    wp_enqueue_script(
+        'loopis-form-validate',
+        LOOPIS_CONTENT_URL . 'assets/js/loopis-form-validate.js',
+        [],
+        '1.0',
+        true
+    );
+
 }
+
+// Load PHP-Ajax handler for selecting single and multiple users
+add_action('wp_ajax_loopis_user_search', 'loopis_user_ajax_search');
+
+function loopis_user_ajax_search() {
+
+    check_ajax_referer('loopis_user_search', 'nonce');
+
+    if ( ! current_user_can('edit_posts') ) {
+        wp_send_json_error();
+    }
+
+    $q = sanitize_text_field($_POST['q'] ?? '');
+
+    if ( strlen($q) < 2 ) {
+        wp_send_json_success([]);
+    }
+
+    $users = get_users([
+        'search'         => '*' . esc_attr($q) . '*',
+        'search_columns'=> ['user_login', 'display_name', 'user_email'],
+        'number'         => 10,
+        'orderby'        => 'display_name',
+        'order'          => 'ASC',
+    ]);
+
+    $results = [];
+
+    foreach ( $users as $user ) {
+        $results[] = [
+            'id'    => $user->ID,
+            'label' => $user->display_name . ' (' . $user->user_email . ')',
+        ];
+    }
+
+    wp_send_json_success($results);
+}
+
+// Save function for taxonomy fields
+function loopis_save_taxonomy_field( $post_id ) {
+
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
+    if ( wp_is_post_revision( $post_id ) ) return;
+    if ( ! isset($_POST['loopis_fields_nonce']) ) return;
+    if ( ! wp_verify_nonce($_POST['loopis_fields_nonce'], 'loopis_save_fields') ) return;
+
+    // Get field groups to find taxonomy fields
+    $groups = loopis_get_field_groups();
+    $current_post_type = get_post_type($post_id);
+
+    foreach ($groups as $group) {
+        if (!in_array($current_post_type, $group['post_types'], true)) {
+            continue;
+        }
+
+        foreach ($group['fields'] as $key => $field) {
+            if ($field['type'] !== 'taxonomy') {
+                continue;
+            }
+
+            $taxonomy = $field['taxonomy'] ?? '';
+            if (!$taxonomy || !taxonomy_exists($taxonomy)) {
+                continue;
+            }
+
+            $term_id = isset($_POST[$key]) ? intval($_POST[$key]) : 0;
+
+            if ($term_id && term_exists($term_id, $taxonomy)) {
+                wp_set_object_terms($post_id, [$term_id], $taxonomy, false);
+            } else {
+                wp_set_object_terms($post_id, [], $taxonomy, false);
+            }
+        }
+    }
+}
+
+// Note: This hook runs at priority 20. If conflicts occur with other plugins,
+// consider increasing this priority or reducing to "15" (after postmeta saves).
+add_action('save_post', 'loopis_save_taxonomy_field', 20);
+
+
 
 /**
  * Field groups with custom fields
@@ -64,10 +168,10 @@ function loopis_get_field_groups() {
 
     return [
 
-        // Field group: 'support_meta', custom fields: 'title', 'link', 'status', 'invited'
+        // Field group: 'support_meta'
 
         'support_meta' => [
-            'title' => 'Support Fields',
+            'title' => 'Support Post Data',
             'post_types' => ['support'],
             'fields' => [
                 'title' => [
@@ -90,11 +194,11 @@ function loopis_get_field_groups() {
             ],
         ],
 
-        // Field group: 'post_meta', custom fields: 'location', 'custom_location', etc
+        // Field group: 'post_meta'
         // remove_when_empty, true for all fields except for the user_ajax fields 'participants' and 'fetcher'
 
         'post_meta' => [
-            'title' => 'Post Data Fields',
+            'title' => 'Default Post Data',
             'post_types' => ['post'],
             'fields' => [
                 'location' => [
@@ -326,27 +430,26 @@ function loopis_render_meta_box( $post, $box ) {
                 echo '</div>'; // end of .loopis-user-selected
 
                 // Search field and result container
-                echo '<input type="text" class="loopis-user-search" placeholder="Search users..." autocomplete="off">';
+                echo '<input type="text" class="loopis-user-search" autocomplete="off">';
                 echo '<div class="loopis-user-results"></div>';
 
                 echo '</div>'; // end of wrapper
-                echo '<p class="description">Add user|s</p>';
+                echo '<p class="description">Add user(s)</p>';
                 break;
 
             case 'url':
                 echo '<input type="url" class="regular-text loopis-url" 
                 name="' . esc_attr( $key ) . '" 
                 value="' . esc_attr( $value ) . '"
-                placeholder="https://example.com"
                 >';
-                echo '<p>Insert a valid URL starting with https://</p>';
+                echo '<p>Insert URL starting with https://</p>';
                 break;
 
             case 'taxonomy':
                 $taxonomy = $field['taxonomy'];
 
                 if ( ! taxonomy_exists( $taxonomy ) ) {
-                    echo '<p>Taxonomin finns inte.</p>';
+                    echo '<p>Taxonomy does not exist.</p>';
                     break;
                 }
 
@@ -371,7 +474,7 @@ function loopis_render_meta_box( $post, $box ) {
 
                 echo '<select name="' . esc_attr( $key ) . '" class="loopis-taxonomy-select">';
 
-                echo '<option value="">— Välj —</option>';
+                echo '<option value="">— Choose —</option>';
 
                 foreach ( $terms as $term ) {
                     echo '<option value="' . esc_attr( $term->term_id ) . '" ' .
@@ -391,10 +494,9 @@ function loopis_render_meta_box( $post, $box ) {
                 value="' . esc_attr( $value ) . '"
                 class="loopis-datetime"
                 pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}"
-                placeholder="YYYY-MM-DD HH:MM:SS"
-                title="Format: YYYY-MM-DD HH:MM:SS"
+                title="Add date (YYYY-MM-DD HH:MM:SS)"
                 >';
-                echo '<p>Insert a date</p>';
+                echo '<p>Add date (YYYY-MM-DD HH:MM:SS)</p>';
                 break;
 
             case 'image':

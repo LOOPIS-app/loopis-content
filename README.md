@@ -2,7 +2,7 @@
 **Plugin for configuring and creating the post content of LOOPIS.app**
 
 ## 💡 Status
-We are working on replacing third party plugins like "WPUM Frontend Posting".
+Third party plugin ACF succesfully replaced! Now working on replacing the WPUM addons.
 
 ## 📋 Changelog
 See [CHANGELOG.md](CHANGELOG.md)
@@ -11,4 +11,4 @@ See [CHANGELOG.md](CHANGELOG.md)
 Installation & updates are managed by plugin "LOOPIS Config".
 
 ## 👤 Contributors
-Nils Larsson, Hubert Hilborn, Johan Hagvil
+Nils Larsson, Johan Hagvil, Hubert Hilborn

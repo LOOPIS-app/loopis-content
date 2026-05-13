@@ -1,7 +1,6 @@
 <?php
 /**
- * Function to register custom taxonomies
- *
+ * Register custom taxonomies for main site.
  */
 
 // Prevent direct access
@@ -9,16 +8,15 @@ if (!defined('ABSPATH')) {
     exit; 
 }
 
-function register_taxonomies() {
+function loopis_tax_hq() {
 
     $taxonomies = [
 
-        // A taxonomy for the CPT type 'faq' with the name 'faq-categories' etc
-        
+        // Taxonomy for CPT 'faq'
         'faq-tag' => [
             'post_type' => 'faq',
             'slug' => 'faq-tag',
-            'name' => 'FAQ-tags',
+            'name' => 'FAQ-tag',
             'hierarchical' => false, // false for "tags" (not hierarchical taxonomy type)
             'show_ui'           => true,
             'show_in_nav_menus' => false,
@@ -27,10 +25,11 @@ function register_taxonomies() {
             'public'            => false,
         ],
 
-        'forum-category' => [
-            'post_type' => 'forum',
-            'slug' => 'forum-category',
-            'name' => 'Forum-categories',
+        // Taxonomy for CPT 'news'
+        'news-category' => [
+            'post_type' => 'news',
+            'slug' => 'news-category',
+            'name' => 'News-category',
             'hierarchical' => true, // hierarchical categories 
             'show_ui'           => true,
             'show_in_nav_menus' => false,
@@ -39,17 +38,6 @@ function register_taxonomies() {
             'public'            => false,
         ],
         
-        'support-category' => [ 
-            'post_type' => 'support',
-            'slug' => 'support-category',
-            'name' => 'Support-categories',
-            'hierarchical' => true, // hierarchical categories
-            'show_ui'           => true,
-            'show_in_nav_menus' => false,
-            'show_admin_column' => true,
-            'show_tagcloud'     => false,
-            'public'            => false,
-        ],
 
         // Add more taxonomies here
     ];
@@ -75,6 +63,4 @@ function register_taxonomies() {
 
 }
 
-add_action( 'init', 'register_taxonomies' );
-
-?>
+add_action( 'init', 'loopis_tax_hq' );

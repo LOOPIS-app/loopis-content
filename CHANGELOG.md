@@ -1,5 +1,8 @@
 # 📋 Changelog for "LOOPIS Content"
 
+## 0.36 (2026-05-13)
+- Support for multisite: separate configuration for HQ & Local. (WIP)
+
 ## 0.35 (2026-04-01)
 - Default terms can now be removed from WPAA
 - Default terms are only registered on activation
