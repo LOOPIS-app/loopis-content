@@ -1,6 +1,6 @@
 <?php
 /**
- * View and edit custom fields for posts on single/sub sites.
+ * View and edit custom fields for posts on main site.
  */
 
 // Prevent direct access
@@ -160,151 +160,74 @@ add_action('save_post', 'loopis_save_taxonomy_field', 20);
 
 /**
  * Field groups with custom fields
- * remove_when_empty option: if true, meta_key + meta_value will be removed in postmeta table if there is no value in the field
- * if false: meta_key will remain in the postmeta table with an empty string '' as meta_value
  */
 
 function loopis_get_field_groups() {
 
     return [
 
-        // Field group: 'support_meta'
+        // Field group: 'faq_meta' (not yet used)
 
-        'support_meta' => [
-            'title' => 'Support Post Data',
-            'post_types' => ['support'],
+        'faq_meta' => [
+            'title' => 'FAQ Post Data',
+            'post_types' => ['faq'],
             'fields' => [
                 'title' => [
-                    'label' => 'Source title',
+                    'label' => 'Example text field',
                     'type'  => 'text',
                     'remove_when_empty' => true, // true will remove meta_key + meta_value when empty
                 ],
-                'link' => [
-                    'label' => 'Source link',
-                    'type'  => 'url',
-                    'remove_when_empty' => true,
-                ],
-                'invited' => [
-                    'label' => 'Invited members',
-                    'type'  => 'user_ajax',
-                    'multiple' => true, // needed for multiple users
-                    'remove_when_empty' => true,
-                ],
-
+                // Add more fields here ...
             ],
         ],
 
         // Field group: 'post_meta'
-        // remove_when_empty, true for all fields except for the user_ajax fields 'participants' and 'fetcher'
 
         'post_meta' => [
             'title' => 'Default Post Data',
             'post_types' => ['post'],
             'fields' => [
-                'location' => [
-                    'label' => 'Location',
-                    'type'  => 'text',
-                    'remove_when_empty' => true,
-                ],
-                'custom_location' => [
-                    'label' => 'Location (custom)',
-                    'type'  => 'text',
-                    'remove_when_empty' => true,
-                ],
-                'locker_number' => [
-                    'label' => 'Locker number',
+                    'area_number' => [
+                    'label' => 'Area number',
                     'type'  => 'number',
-                    'remove_when_empty' => true, // true but will never be empty because of the default value
-                    'default' => 001, // default number: 001, remove 'default' => 001, to remove default value
-                ],
-                'image_2' => [
-                    'label' => 'Extra image?',
-                    'type'  => 'image',
                     'remove_when_empty' => true,
                 ],
-                'participants' => [
-                    'label' => 'Participants',
-                    'type'  => 'user_ajax',
-                    'multiple' => true, // needed for multiple users
+                'area_city' => [
+                    'label' => 'Area city',
+                    'type'  => 'text',
                     'remove_when_empty' => true,
                 ],
-                'fetcher' => [
-                    'label' => 'Fetcher',
-                    'type'  => 'user_ajax',
-                    'multiple' => false, // needed for single user, difference from ACF: this value can be empty, in ACF it can't be cleared from WPAA/Gutenberg
-                    'remove_when_empty' => true,
-                ],
-                'queue' => [
-                    'label' => 'Queue',
-                    'type'  => 'user_ajax',
-                    'multiple' => true, // needed for multiple users
-                    'remove_when_empty' => true,
-                ],
-                'raffle_date' => [
-                    'label' => 'Raffle date',
+                'area_launch_date' => [
+                    'label' => 'Area launch date',
                     'type'  => 'datetime', // datetime is a custom created format, see the datetime case in the render meta box function
                     'remove_when_empty' => true,
                 ],
-                'book_date' => [
-                    'label' => 'Book date',
-                    'type'  => 'datetime',
-                    'remove_when_empty' => true,
-                ],
-                'locker_date' => [
-                    'label' => 'Locker date',
-                    'type'  => 'datetime',
-                    'remove_when_empty' => true,
-                ],
-                'fetch_date' => [
-                    'label' => 'Fetch date',
-                    'type'  => 'datetime',
-                    'remove_when_empty' => true,
-                ],
-                'forward_date' => [
-                    'label' => 'Forward date',
-                    'type'  => 'datetime',
-                    'remove_when_empty' => true,
-                ],
-                'remove_date' => [
-                    'label' => 'Remove date',
-                    'type'  => 'datetime',
-                    'remove_when_empty' => true,
-                ],
-                'pause_date' => [
-                    'label' => 'Pause date',
-                    'type'  => 'datetime',
-                    'remove_when_empty' => true,
-                ],
-                'archive_date' => [
-                    'label' => 'Archive date',
-                    'type'  => 'datetime',
-                    'remove_when_empty' => true,
-                ],
-                'extend_date' => [
-                    'label' => 'Extend date',
-                    'type'  => 'datetime',
-                    'remove_when_empty' => true,
-                ],
-                'forward_post' => [
-                    'label' => 'Forward post',
+                'active_members' => [
+                    'label' => 'Active members',
                     'type'  => 'number',
                     'remove_when_empty' => true,
                 ],
-                'previous_post' => [
-                    'label' => 'Previous post',
+                'circulated_things' => [
+                    'label' => 'Circulated things',
                     'type'  => 'number',
                     'remove_when_empty' => true,
                 ],
-                'reminder_leave' => [
-                    'label' => 'Reminder leave',
+                'locker_postal_code' => [
+                    'label' => 'Locker postal code',
                     'type'  => 'number',
                     'remove_when_empty' => true,
                 ],
-                'reminder_fetch' => [
-                    'label' => 'Reminder fetch',
-                    'type'  => 'number',
+                'locker_address' => [
+                    'label' => 'Locker street address',
+                    'type'  => 'text',
                     'remove_when_empty' => true,
                 ],
+                'locker_link' => [
+                    'label' => 'Locker link (Google maps)',
+                    'type'  => 'url',
+                    'remove_when_empty' => true,
+                ],
+                // Add more fields here ...
             ],
         ],
 

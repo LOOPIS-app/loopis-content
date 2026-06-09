@@ -44,6 +44,9 @@ if ( is_multisite() && is_main_site() ) :
     // Load CPTs
     require_once LOOPIS_CONTENT_DIR . '/functions/loopis_cpt_hq.php';
 
+    // Load custom fields
+    require_once LOOPIS_CONTENT_DIR . '/functions/loopis_cf_hq.php';
+
 else :
     // Load taxonomies
     require_once LOOPIS_CONTENT_DIR . '/functions/loopis_tax_local.php';
