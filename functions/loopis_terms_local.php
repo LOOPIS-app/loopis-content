@@ -1,10 +1,6 @@
 <?php
 /**
- * Create default terms for single/sub sites.
- * 
- * HUBERT TODO:
- * This should be in "LOOPIS Config"? Because it is database configuration.
- *
+ * Create default terms for sub sites.
  */
 
 // Prevent direct access
@@ -21,6 +17,11 @@ function loopis_terms_local() {
 
         // Terms for CPT 'faq' taxonomy 'faq-tag'
         'faq-tag' => [
+            
+            [
+                'name' => 'Introduktion',
+                'slug' => 'introduction',
+            ],
             [
                 'name' => 'Instruktioner',
                 'slug' => 'instructions',
@@ -74,12 +75,16 @@ function loopis_terms_local() {
         // Terms for CPT 'support' taxonomy 'support-category'
         'support-category' => [
             [
-                'name' => '⚠ Pågående',
+                'name' => '🔴 Pågående',
                 'slug' => 'active',
             ],
             [
-                'name' => '✅ Besvarad',
+                'name' => '🟢 Besvarad',
                 'slug' => 'inactive',
+            ],
+            [
+                'name' => '⛔ Privat',
+                'slug' => 'private',
             ],
         ],
 
@@ -109,4 +114,4 @@ function loopis_terms_local() {
 }
 
 // Uncomment below line if terms should be recreated if they are removed in WP admin (persist)
-//add_action('init', 'loopis_terms_local');
+add_action('init', 'loopis_terms_local');

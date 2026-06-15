@@ -184,7 +184,7 @@ function loopis_get_field_groups() {
         // Field group: 'post_meta'
 
         'post_meta' => [
-            'title' => 'Default Post Data',
+            'title' => 'Area Post Data',
             'post_types' => ['post'],
             'fields' => [
                     'area_number' => [
@@ -448,6 +448,19 @@ function loopis_save_fields( $post_id ) {
     // Get post type for current post
     $current_post_type = get_post_type( $post_id );
 
+    // Addition by Johan: Blank means truly empty ("", null, or empty array). Values like "0" are not blank.
+    $is_blank_value = static function ( $raw ) {
+        if ( is_array( $raw ) ) {
+            return count( $raw ) === 0;
+        }
+
+        if ( null === $raw ) {
+            return true;
+        }
+
+        return '' === trim( (string) $raw );
+    };
+
     foreach ( loopis_get_field_groups() as $group ) {
 
         // Skip field groups that don't belong to this post type
@@ -462,14 +475,16 @@ function loopis_save_fields( $post_id ) {
 
             // Get the value from the form else set to empty string
             $value = $_POST[ $key ] ?? '';
+            $value_is_blank = $is_blank_value( $value );
 
             // If a default is configured and no input, use it (so default behavior is preserved)
-            if ( empty( $value ) && isset( $field['default'] ) ) {
+            if ( $value_is_blank && isset( $field['default'] ) ) {
                 $value = $field['default'];
+                $value_is_blank = $is_blank_value( $value );
             }
 
             // If remove_when_empty is true and the value is empty => remove meta (meta_key + meta_value)
-            if ( $field['remove_when_empty'] && empty( $value ) ) {
+            if ( $field['remove_when_empty'] && $value_is_blank ) {
                 delete_post_meta( $post_id, $key );
                 continue; // continue to the next field
             }

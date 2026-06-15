@@ -99,4 +99,4 @@ function loopis_terms_hq() {
 }
 
 // Uncomment below line if terms should be recreated if they are removed in WP admin (persist)
-// add_action('init', 'loopis_terms_hq');
+add_action('init', 'loopis_terms_hq');
