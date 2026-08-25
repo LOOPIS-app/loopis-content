@@ -11,15 +11,14 @@ if (!defined('ABSPATH')) {
 function loopis_cpt_local() {
 
  $cpts = [
-
-    // Custom post type 'faq'
-    'faq' => [
+    // Custom post type 'news' (to be filled with former 'forum' posts)
+    'news' => [
         'labels' => [
-            'name'          => '📌 Frågor & svar',
-            'singular_name' => '📌 Fråga & svar',
-			'add_new_item'  => 'Add new FAQ',
-            'search_items'  => 'Search FAQs',
-            'not_found'     => 'No FAQs found',
+            'name'          => '📡 Nyheter',
+            'singular_name' => '📡 Nyhetsinlägg',
+			'add_new_item'  => 'Add new News post',
+            'search_items'  => 'Search News posts',
+            'not_found'     => 'No News posts found',
         ],
 
         'public'                => true,
@@ -27,19 +26,18 @@ function loopis_cpt_local() {
         'show_in_rest'          => true,
         'show_in_nav_menus'     => true,
         'show_in_admin_bar'     => true,
-        'exclude_from_search'   => false,
+        'exclude_from_search'   => true,
         'show_ui'               => true,
         'show_in_menu'          => false,
-        'menu_icon'             => 'dashicons-sticky',
+        'menu_icon'             => 'dashicons-media-document',
         'hierarchical'          => false, // for sorting date/desc, treat as post
-        'has_archive'           => 'faq',
-        'query_var'             => 'faq',
+        'has_archive'           => true,
+        'query_var'             => 'news',
         'map_meta_cap'          => true,
-        'menu_position'         => 13,
-        'taxonomies'            => ['faq-tag'],
+        'menu_position'         => 14,
 
         'rewrite' => [
-            'slug'          => 'faq',
+            'slug'          => 'news',
             'with_front'    => true,
             'pages'         => true,
             'feeds'         => true,
@@ -52,14 +50,15 @@ function loopis_cpt_local() {
             'excerpt',
             'thumbnail',
             'author',
+            'comments',
         ],
     ],
 
-    // Custom post type 'forum'
+    // Custom post type 'forum' (to be used for support and discussion)
     'forum' => [
         'labels' => [
-            'name'          => '📡 Nyheter',
-            'singular_name' => '📡 Nyhet',
+            'name'          => '🗣 Forum',
+            'singular_name' => '🗣 Forumtråd',
 			'add_new_item'  => 'Add new Forum post',
             'search_items'  => 'Search Forum posts',
             'not_found'     => 'No forum posts found',
@@ -98,7 +97,7 @@ function loopis_cpt_local() {
         ],
     ],
 
-    // Custom post type 'support'
+    // Custom post type 'support' (to be deprecated)
     'support' => [
         'labels' => [
             'name'          => '🛟 Support-frågor',

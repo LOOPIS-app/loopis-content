@@ -11,20 +11,19 @@ if (!defined('ABSPATH')) {
 function loopis_tax_local() {
 
     $taxonomies = [
-
-        // Taxonomy for CPT 'faq'
-        'faq-tag' => [
-            'post_type' => 'faq',
-            'slug' => 'faq-tag',
-            'name' => 'FAQ-tags',
-            'hierarchical' => false, // false for "tags" (not hierarchical taxonomy type)
+        // Taxonomy for CPT 'news'
+        'news-category' => [
+            'post_type' => 'news',
+            'slug' => 'news-category',
+            'name' => 'News-categories',
+            'hierarchical' => true, // hierarchical categories 
             'show_ui'           => true,
             'show_in_nav_menus' => false,
             'show_admin_column' => true,
             'show_tagcloud'     => false,
             'public'            => false,
         ],
-
+        
         // Taxonomy for CPT 'forum'
         'forum-category' => [
             'post_type' => 'forum',

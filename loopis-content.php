@@ -3,7 +3,7 @@
 * Plugin Name:  LOOPIS Content
 * Plugin URI:   https://github.com/LOOPIS-app/loopis-content
 * Description:  Plugin for configuring and creating the post content of LOOPIS.app
-* Version:      0.36
+* Version:      0.37
 * Author:       The Develoopers
 * Author URI:   https://loopis.org
 * License:      GPL-3.0-or-later
@@ -24,7 +24,7 @@
 if (!defined('ABSPATH')) { exit; }
 
 // Define plugin version
-define('LOOPIS_CONTENT_VERSION', '0.36');
+define('LOOPIS_CONTENT_VERSION', '0.37'); // Update version number here + add to CHANGELOG.md
 define('LOOPIS_CONTENT_TERMS_VERSION_OPTION', 'loopis_content_terms_version');
 
 // Define plugin folder path constants
@@ -32,7 +32,7 @@ define('LOOPIS_CONTENT_DIR', plugin_dir_path(__FILE__)); // Server-side path to 
 define('LOOPIS_CONTENT_URL', plugin_dir_url(__FILE__));  // Client-side path to https://site.com/wp-content/plugins/loopis-content/
 
 // Load different files for main site and single/sub-sites
-if ( is_multisite() && is_main_site() ) :
+if ( is_main_site() ) :
 
     // Load taxonomies
     require_once LOOPIS_CONTENT_DIR . '/functions/loopis_tax_hq.php';
@@ -41,7 +41,7 @@ if ( is_multisite() && is_main_site() ) :
     require_once LOOPIS_CONTENT_DIR . '/functions/loopis_terms_hq.php';
     register_activation_hook( __FILE__, 'loopis_terms_hq' );
 
-    // Load CPTs
+    // Load custom post types
     require_once LOOPIS_CONTENT_DIR . '/functions/loopis_cpt_hq.php';
 
     // Load custom fields
@@ -55,7 +55,7 @@ else :
     require_once LOOPIS_CONTENT_DIR . '/functions/loopis_terms_local.php';
     register_activation_hook( __FILE__, 'loopis_terms_local' );
 
-    // Load CPTs
+    // Load custom post types
     require_once LOOPIS_CONTENT_DIR . '/functions/loopis_cpt_local.php';
 
     // Load custom fields
@@ -65,7 +65,7 @@ endif;
 
 // Flush rewrite rules on activation for CPT archives to resolve correctly
 register_activation_hook( __FILE__, function() {
-    if ( is_multisite() && is_main_site() ) {
+    if ( is_main_site() ) {
         loopis_cpt_hq();
     } else {
         loopis_cpt_local();

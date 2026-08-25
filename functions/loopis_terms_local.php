@@ -15,33 +15,32 @@ function loopis_terms_local() {
 
     $defaults = [
 
-        // Terms for CPT 'faq' taxonomy 'faq-tag'
-        'faq-tag' => [
-            
+        // Terms for CPT 'news' taxonomy 'news-category'
+        'news-category' => [
             [
-                'name' => 'Introduktion',
-                'slug' => 'introduction',
+                'name' => '✨ Nyhet',
+                'slug' => 'news',
             ],
             [
-                'name' => 'Instruktioner',
-                'slug' => 'instructions',
+                'name' => '🌈 Aktuellt',
+                'slug' => 'current',
             ],
             [
-                'name' => 'Medlemskap',
-                'slug' => 'membership',
+                'name' => '🗨 Feedback',
+                'slug' => 'feedback',
             ],
             [
-                'name' => 'LOOPIS.app',
-                'slug' => 'app',
+                'name' => '🙌 Hjälp önskas',
+                'slug' => 'help',
             ],
             [
-                'name' => 'LOOPIS skåp',
-                'slug' => 'locker',
+                'name' => '🔔 Startsidan',
+                'slug' => 'start',
             ],
-            [
-                'name' => 'Om föreningen',
-                'slug' => 'organisation',
-            ],         
+                        [
+                'name' => '📌 Tips',
+                'slug' => 'tips',
+            ],
         ],
 
         // Terms for CPT 'forum' taxonomy 'forum-category'
