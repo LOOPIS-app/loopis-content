@@ -1,6 +1,9 @@
 <?php
 /**
- * Create default terms for sub sites.
+ * Create default terms for main site.
+ * 
+ * HUBERT TODO:
+ * This should be in "LOOPIS Config"? Because it is database configuration.
  */
 
 // Prevent direct access
@@ -8,18 +11,42 @@ if (!defined('ABSPATH')) {
     exit; 
 }
 
-function loopis_terms_local() {
+function loopis_terms_hq() {
 
     // Function to add default tags at the right time (before register_activation_hook)
-    loopis_tax_local();
+    loopis_tax_hq();
 
     $defaults = [
 
-        // Terms for CPT 'news' taxonomy 'news-category'
+        // Terms for CPT 'faq' taxonomy 'faq-tag'
+        'faq-tag' => [
+            [
+                'name' => 'Instruktioner',
+                'slug' => 'instructions',
+            ],
+            [
+                'name' => 'Medlemskap',
+                'slug' => 'membership',
+            ],
+            [
+                'name' => 'LOOPIS.app',
+                'slug' => 'app',
+            ],
+            [
+                'name' => 'LOOPIS skåp',
+                'slug' => 'locker',
+            ],
+            [
+                'name' => 'Om föreningen',
+                'slug' => 'organisation',
+            ],         
+        ],
+
+    // Terms for CPT 'news' taxonomy 'news-category'
         'news-category' => [
             [
-                'name' => '✨ Nyhet',
-                'slug' => 'news',
+                'name' => '✨ Uppdatering',
+                'slug' => 'update',
             ],
             [
                 'name' => '🌈 Aktuellt',
@@ -28,6 +55,10 @@ function loopis_terms_local() {
             [
                 'name' => '🗨 Feedback',
                 'slug' => 'feedback',
+            ],
+            [
+                'name' => '🎉 Firande',
+                'slug' => 'celebration',
             ],
             [
                 'name' => '🙌 Hjälp önskas',
@@ -42,23 +73,6 @@ function loopis_terms_local() {
                 'slug' => 'tips',
             ],
         ],
-
-        // Terms for CPT 'support' taxonomy 'support-category'
-        'support-category' => [
-            [
-                'name' => '🔴 Pågående',
-                'slug' => 'active',
-            ],
-            [
-                'name' => '🟢 Besvarad',
-                'slug' => 'inactive',
-            ],
-            [
-                'name' => '⛔ Privat',
-                'slug' => 'private',
-            ],
-        ],
-
     ];
 
     foreach ( $defaults as $taxonomy => $terms ) {
@@ -85,4 +99,4 @@ function loopis_terms_local() {
 }
 
 // Uncomment below line if terms should be recreated if they are removed in WP admin (persist)
-add_action('init', 'loopis_terms_local');
+add_action('init', 'loopis_terms_hq');

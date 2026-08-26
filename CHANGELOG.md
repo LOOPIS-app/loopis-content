@@ -1,8 +1,7 @@
 # 📋 Changelog for "LOOPIS Content"
 
-## 0.37 (2026-08-25)
-- Former CPT 'forum' renamed to 'news'
-- Former CPT 'support' deprecated and replaced by 'forum'
+## 0.37 (2026-08-26)
+- CPT revision: 'forum' renamed to 'news'
 
 ## 0.36 (2026-05-13)
 - Support for multisite: separate configuration for HQ & Local. (WIP)

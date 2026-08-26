@@ -1,6 +1,6 @@
 <?php
 /**
- * Register custom taxonomies for single/sub sites.
+ * Register custom taxonomies for main site.
  */
 
 // Prevent direct access
@@ -8,14 +8,28 @@ if (!defined('ABSPATH')) {
     exit; 
 }
 
-function loopis_tax_local() {
+function loopis_tax_hq() {
 
     $taxonomies = [
+
+        // Taxonomy for CPT 'faq'
+        'faq-tag' => [
+            'post_type' => 'faq',
+            'slug' => 'faq-tag',
+            'name' => 'FAQ-tag',
+            'hierarchical' => false, // false for "tags" (not hierarchical taxonomy type)
+            'show_ui'           => true,
+            'show_in_nav_menus' => false,
+            'show_admin_column' => true,
+            'show_tagcloud'     => false,
+            'public'            => false,
+        ],
+
         // Taxonomy for CPT 'news'
         'news-category' => [
             'post_type' => 'news',
             'slug' => 'news-category',
-            'name' => 'News-categories',
+            'name' => 'News-category',
             'hierarchical' => true, // hierarchical categories 
             'show_ui'           => true,
             'show_in_nav_menus' => false,
@@ -24,18 +38,6 @@ function loopis_tax_local() {
             'public'            => false,
         ],
         
-        // Taxonomy for CPT 'support'
-        'support-category' => [ 
-            'post_type' => 'support',
-            'slug' => 'support-category',
-            'name' => 'Support-categories',
-            'hierarchical' => true, // hierarchical categories
-            'show_ui'           => true,
-            'show_in_nav_menus' => false,
-            'show_admin_column' => true,
-            'show_tagcloud'     => false,
-            'public'            => false,
-        ],
 
         // Add more taxonomies here
     ];
@@ -61,4 +63,4 @@ function loopis_tax_local() {
 
 }
 
-add_action( 'init', 'loopis_tax_local' );
+add_action( 'init', 'loopis_tax_hq' );
