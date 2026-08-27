@@ -187,9 +187,9 @@ function loopis_get_field_groups() {
             'title' => 'Area Post Data',
             'post_types' => ['post'],
             'fields' => [
-                    'area_number' => [
-                    'label' => 'Area number',
-                    'type'  => 'number',
+                'area_subdirectory' => [
+                    'label' => 'Area subdirectory',
+                    'type'  => 'text',
                     'remove_when_empty' => true,
                 ],
                 'area_city' => [
@@ -202,16 +202,6 @@ function loopis_get_field_groups() {
                     'type'  => 'datetime', // datetime is a custom created format, see the datetime case in the render meta box function
                     'remove_when_empty' => true,
                 ],
-                'active_members' => [
-                    'label' => 'Active members',
-                    'type'  => 'number',
-                    'remove_when_empty' => true,
-                ],
-                'circulated_things' => [
-                    'label' => 'Circulated things',
-                    'type'  => 'number',
-                    'remove_when_empty' => true,
-                ],
                 'locker_postal_code' => [
                     'label' => 'Locker postal code',
                     'type'  => 'number',
@@ -222,9 +212,24 @@ function loopis_get_field_groups() {
                     'type'  => 'text',
                     'remove_when_empty' => true,
                 ],
-                'locker_link' => [
+                'locker_google_maps' => [
                     'label' => 'Locker link (Google maps)',
                     'type'  => 'url',
+                    'remove_when_empty' => true,
+                ],
+                'locker_model' => [
+                    'label' => 'Locker model',
+                    'type'  => 'text',
+                    'remove_when_empty' => true,
+                ],
+                'area_members' => [
+                    'label' => 'Area members',
+                    'type'  => 'number',
+                    'remove_when_empty' => true,
+                ],
+                'area_circulated_things' => [
+                    'label' => 'Area circulated things',
+                    'type'  => 'number',
                     'remove_when_empty' => true,
                 ],
                 // Add more fields here ...
