@@ -192,6 +192,11 @@ function loopis_get_field_groups() {
                     'type'  => 'text',
                     'remove_when_empty' => true,
                 ],
+                'area_blog_id' => [
+                    'label' => 'Blog ID',
+                    'type'  => 'text',
+                    'remove_when_empty' => true,
+                ],
                 'area_city' => [
                     'label' => 'Area city',
                     'type'  => 'text',
