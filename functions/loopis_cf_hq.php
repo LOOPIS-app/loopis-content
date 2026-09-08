@@ -193,7 +193,7 @@ function loopis_get_field_groups() {
                     'remove_when_empty' => true,
                 ],
                 'area_blog_id' => [
-                    'label' => 'Blog ID',
+                    'label' => 'Area blog ID',
                     'type'  => 'text',
                     'remove_when_empty' => true,
                 ],
