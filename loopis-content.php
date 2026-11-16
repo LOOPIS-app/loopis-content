@@ -3,7 +3,7 @@
 * Plugin Name:  LOOPIS Content
 * Plugin URI:   https://github.com/LOOPIS-app/loopis-content
 * Description:  Plugin for configuring and creating the post content of LOOPIS.app
-* Version:      0.37
+* Version:      0.38
 * Author:       The Develoopers
 * Author URI:   https://loopis.org
 * License:      GPL-3.0-or-later
@@ -24,12 +24,15 @@
 if (!defined('ABSPATH')) { exit; }
 
 // Define plugin version
-define('LOOPIS_CONTENT_VERSION', '0.37'); // Update version number here + add to CHANGELOG.md
+define('LOOPIS_CONTENT_VERSION', '0.38'); // Update version number here + add to CHANGELOG.md
 define('LOOPIS_CONTENT_TERMS_VERSION_OPTION', 'loopis_content_terms_version');
 
 // Define plugin folder path constants
 define('LOOPIS_CONTENT_DIR', plugin_dir_path(__FILE__)); // Server-side path to /wp-content/plugins/loopis-content/
 define('LOOPIS_CONTENT_URL', plugin_dir_url(__FILE__));  // Client-side path to https://site.com/wp-content/plugins/loopis-content/
+
+// Apply image upload processing
+require_once LOOPIS_CONTENT_DIR . '/functions/loopis_image_uploads.php';
 
 // Load different files for main site and single/sub-sites
 if ( is_main_site() ) :
