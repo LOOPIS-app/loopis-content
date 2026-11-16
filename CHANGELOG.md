@@ -1,5 +1,9 @@
 # 📋 Changelog for "LOOPIS Content"
 
+## 0.38 (2026-11-16)
+- Replacing plugin "EWWW Image Optimizer" with custom code
+- Changing post image format from JPEG to WebP
+
 ## 0.37 (2026-08-26)
 - CPT revision: 'forum' renamed to 'news'
 
